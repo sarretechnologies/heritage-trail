@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#8B1F3C">
+<title>The Heritage Trail · St Peters Lutheran College Indooroopilly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+  :root {
+    --maroon: #8B1F3C;
+    --maroon-dark: #6B1830;
+    --maroon-deep: #54112A;
+    --maroon-faint: rgba(139, 31, 60, 0.06);
+    --cream: #FAF7F3;
+    --cream-deep: #F2ECE4;
+    --white: #FFFFFF;
+    --ink: #1F1F1F;
+    --text: #2A2A2A;
+    --text-muted: #6B6B6B;
+    --text-subtle: #9A9A9A;
+    --border: #E5E0DC;
+    --border-strong: #C8C0BB;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Work Sans', -apple-system, sans-serif;
+    --maxw: 1200px;
+    --readw: 700px;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--white);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  /* Mock-up ribbon */
+  .mockup-banner {
+    background: var(--ink); color: var(--cream); padding: 7px 16px;
+    font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    text-align: center; font-weight: 500; z-index: 200;
+  }
+  .mockup-banner span { color: #E8B4C2; }
+
+  /* Nav */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px clamp(16px, 3vw, 40px);
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(10px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); cursor: pointer; }
+  .crest {
+    width: 42px; height: 42px; background: var(--maroon); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 19px; position: relative;
+  }
+  .crest::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(255,255,255,0.4); }
+  .nav-brand-text strong {
+    display: block; font-family: var(--serif); font-weight: 400;
+    font-size: 17px; color: var(--ink); line-height: 1.1;
+  }
+  .nav-brand-text span {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--text-muted); font-weight: 500;
+  }
+  .nav-link {
+    color: var(--maroon); text-decoration: none;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; padding: 10px 16px;
+    border: 1.5px solid var(--maroon); transition: all 0.25s var(--ease);
+    white-space: nowrap;
+  }
+  .nav-link:hover { background: var(--maroon); color: var(--white); }
+  @media (max-width: 560px) {
+    .nav-link { padding: 9px 12px; font-size: 10px; }
+    .nav-brand-text strong { font-size: 15px; }
+    .crest { width: 38px; height: 38px; font-size: 17px; }
+  }
+
+  /* Shared */
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .container-narrow { max-width: var(--readw); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--maroon); font-weight: 600;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--maroon); }
+
+  /* Hero */
+  .hero {
+    padding: clamp(48px, 8vw, 92px) 0 clamp(40px, 6vw, 68px);
+    text-align: center; background: var(--cream); border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(44px, 9vw, 104px); line-height: 0.95;
+    letter-spacing: -0.025em; color: var(--ink); margin: 22px 0 0;
+  }
+  .hero h1 .italic { font-style: italic; color: var(--maroon); }
+  .hero-sub {
+    font-size: clamp(11px, 1.4vw, 12.5px); color: var(--text-muted);
+    letter-spacing: 0.28em; text-transform: uppercase;
+    margin-top: 20px; font-weight: 500;
+  }
+  .hero-meta { display: flex; justify-content: center; gap: 22px; margin-top: 18px; flex-wrap: wrap; }
+  .hero-meta-item {
+    font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--text-subtle); font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero-meta-item::before { content: ''; width: 4px; height: 4px; background: var(--maroon); border-radius: 50%; }
+  .hero-lead {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(18px, 2.2vw, 22px); line-height: 1.55;
+    color: var(--ink); max-width: 660px; margin: 36px auto 0;
+  }
+  .hero-attribution {
+    margin-top: 18px; font-size: 11px; color: var(--text-muted);
+    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-top: 36px; padding: 15px 32px;
+    background: var(--maroon); color: var(--white);
+    font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+    font-weight: 600; text-decoration: none; transition: all 0.25s var(--ease);
+  }
+  .hero-cta:hover { background: var(--maroon-dark); gap: 16px; }
+
+  /* Section */
+  section { padding: clamp(44px, 6vw, 76px) 0; }
+  .section-head { text-align: center; margin-bottom: clamp(32px, 5vw, 52px); }
+  .section-head .eyebrow { margin-bottom: 18px; }
+  .section-head h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(30px, 4.6vw, 44px); line-height: 1.1;
+    letter-spacing: -0.02em; color: var(--ink);
+  }
+  .section-head h2 .italic { font-style: italic; color: var(--maroon); }
+  .section-head p {
+    font-size: clamp(14.5px, 1.55vw, 16px); color: var(--text-muted);
+    max-width: 580px; margin: 20px auto 0; line-height: 1.65;
+  }
+
+  /* Map */
+  .map-section { background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .map-wrap {
+    position: relative; height: clamp(380px, 58vh, 540px);
+    margin: 0 auto; max-width: var(--maxw);
+    border: 1px solid var(--border-strong); overflow: hidden;
+    box-shadow: 0 20px 50px -30px rgba(139, 31, 60, 0.25);
+  }
+  #map { position: absolute; inset: 0; }
+  .map-overlay {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--white); border: 1px solid var(--border-strong);
+    padding: 10px 14px; font-size: 10.5px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--maroon); font-weight: 600;
+    z-index: 500; display: flex; align-items: center; gap: 10px;
+  }
+  .map-overlay::before {
+    content: ''; width: 7px; height: 7px; background: var(--maroon);
+    border-radius: 50%; box-shadow: 0 0 0 3px rgba(139, 31, 60, 0.18);
+  }
+  .map-note {
+    text-align: center; font-size: 11.5px; color: var(--text-muted);
+    margin-top: 14px; font-style: italic; padding: 0 20px;
+  }
+  .trail-marker { background: none !important; border: none !important; }
+  .trail-marker-inner {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--maroon); color: var(--white);
+    border: 2px solid var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--sans); font-weight: 700; font-size: 12px;
+    box-shadow: 0 3px 10px rgba(139, 31, 60, 0.4);
+    cursor: pointer; transition: transform 0.2s var(--ease);
+  }
+  .trail-marker:hover .trail-marker-inner { transform: scale(1.18); background: var(--maroon-dark); }
+  .leaflet-popup-content-wrapper {
+    background: var(--white) !important; border: 1px solid var(--border-strong) !important;
+    border-radius: 2px !important; padding: 0 !important;
+  }
+  .leaflet-popup-content { margin: 0 !important; font-family: var(--sans) !important; }
+  .leaflet-popup-tip { background: var(--white) !important; border: 1px solid var(--border-strong) !important; }
+  .popup { padding: 14px 16px; min-width: 210px; }
+  .popup-num {
+    font-size: 9.5px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--maroon); font-weight: 700; margin-bottom: 4px;
+  }
+  .popup-title {
+    font-family: var(--serif); font-size: 18px; color: var(--ink);
+    line-height: 1.2; margin-bottom: 10px;
+  }
+  .popup-btn {
+    font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--maroon); font-weight: 700;
+    border-bottom: 1.5px solid var(--maroon); padding-bottom: 2px;
+    text-decoration: none; cursor: pointer;
+  }
+  .popup-btn:hover { color: var(--maroon-dark); }
+
+  /* Stops list */
+  .stops-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 0; border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+  }
+  @media (max-width: 720px) { .stops-grid { grid-template-columns: 1fr; border-left: none; } }
+  .stop-card {
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 18px; padding: clamp(22px, 2.6vw, 30px) clamp(20px, 2.6vw, 28px);
+    border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background 0.25s var(--ease);
+    position: relative; text-decoration: none; color: inherit; align-items: center;
+  }
+  @media (max-width: 720px) { .stop-card { border-right: none; } }
+  .stop-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--maroon);
+    transform: scaleY(0); transform-origin: top;
+    transition: transform 0.3s var(--ease);
+  }
+  .stop-card:hover { background: var(--maroon-faint); }
+  .stop-card:hover::before { transform: scaleY(1); }
+  .stop-card:hover .stop-title { color: var(--maroon); }
+  .stop-card:hover .stop-arrow { transform: translateX(4px); color: var(--maroon); }
+  .stop-num {
+    font-family: var(--serif); font-weight: 400; font-size: 34px;
+    color: var(--maroon); line-height: 0.9; min-width: 48px; text-align: center;
+  }
+  .stop-eyebrow {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-subtle); font-weight: 600; margin-bottom: 6px;
+  }
+  .stop-title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(18px, 2vw, 22px); line-height: 1.15;
+    color: var(--ink); margin-bottom: 6px;
+    transition: color 0.2s var(--ease); letter-spacing: -0.01em;
+  }
+  .stop-excerpt {
+    font-size: 13.5px; color: var(--text-muted); line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .stop-arrow {
+    font-size: 20px; color: var(--text-subtle);
+    transition: transform 0.3s var(--ease), color 0.2s var(--ease);
+    align-self: center; font-weight: 300;
+  }
+
+  /* Sample banner inside page */
+  .sample-note {
+    max-width: var(--readw); margin: 28px auto 0;
+    padding: 16px 20px;
+    background: var(--cream-deep); border-left: 3px solid var(--maroon);
+    font-size: 13px; color: var(--text-muted); line-height: 1.55;
+  }
+  .sample-note strong {
+    display: block; color: var(--maroon); font-weight: 700;
+    font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* Attribution */
+  .attribution {
+    padding: clamp(32px, 5vw, 52px) 0;
+    background: var(--cream-deep); border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .attribution-inner { max-width: 560px; margin: 0 auto; padding: 0 24px; }
+  .attribution .eyebrow { margin-bottom: 14px; }
+  .attribution h3 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(20px, 2.4vw, 26px); color: var(--ink); margin-bottom: 12px;
+  }
+  .attribution p { font-size: 14.5px; color: var(--text-muted); line-height: 1.65; }
+
+  /* Footer */
+  .footer { background: var(--maroon); color: var(--cream); padding: 48px 0 24px; }
+  .footer-inner {
+    display: grid; grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 40px; align-items: start;
+  }
+  .footer-col h4 {
+    font-family: var(--serif); font-size: 20px; font-weight: 400;
+    font-style: italic; margin-bottom: 12px; color: var(--white);
+  }
+  .footer-col p { font-size: 13.5px; color: rgba(255,255,255,0.75); line-height: 1.7; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a {
+    font-size: 11.5px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.85); text-decoration: none; cursor: pointer; font-weight: 500;
+  }
+  .footer-col ul a:hover { color: var(--white); }
+  .footer-label {
+    font-size: 10.5px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); margin-bottom: 14px; font-weight: 600;
+  }
+  .footer-base {
+    max-width: var(--maxw); margin: 36px auto 0;
+    padding: 22px clamp(20px, 4vw, 48px) 0;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex; justify-content: space-between;
+    font-size: 10.5px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); flex-wrap: wrap; gap: 12px;
+  }
+  @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr; gap: 30px; } }
+
+  /* Detail */
+  .detail-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px clamp(16px, 3vw, 40px);
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(10px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--maroon); font-weight: 600; cursor: pointer;
+  }
+  .back-btn:hover { color: var(--maroon-dark); }
+  .detail-progress {
+    font-size: 11px; color: var(--text-muted);
+    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+  }
+  .detail-progress strong { color: var(--maroon); font-weight: 700; }
+  .detail-hero {
+    position: relative; height: clamp(260px, 44vh, 400px);
+    background: var(--maroon); overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .detail-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.12), transparent 50%),
+      radial-gradient(ellipse at 70% 80%, rgba(0,0,0,0.2), transparent 60%),
+      linear-gradient(135deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+  }
+  .detail-hero::after {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+    opacity: 0.18; mix-blend-mode: overlay;
+  }
+  .detail-hero-num {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: clamp(140px, 26vw, 240px); color: rgba(255,255,255,0.25);
+    line-height: 1; letter-spacing: -0.03em; position: relative; z-index: 1;
+  }
+  .detail-hero-label {
+    position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+    font-size: 9.5px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6); font-weight: 500; z-index: 2; white-space: nowrap;
+  }
+  .detail-content { padding: clamp(44px, 6vw, 68px) 0 clamp(32px, 4vw, 48px); }
+  .detail-eyebrow { margin-bottom: 22px; }
+  .detail-content h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(32px, 5.5vw, 52px); line-height: 1.05;
+    letter-spacing: -0.02em; color: var(--ink); margin-bottom: 14px;
+  }
+  .detail-subtitle {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(17px, 2vw, 20px); color: var(--text-muted); margin-bottom: 32px;
+  }
+  .detail-meta {
+    display: flex; gap: clamp(20px, 3vw, 36px);
+    padding: 18px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    margin-bottom: 36px; flex-wrap: wrap;
+  }
+  .detail-meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .detail-meta-item .label {
+    font-size: 9.5px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--text-subtle); font-weight: 600;
+  }
+  .detail-meta-item .value { font-family: var(--serif); font-size: 16px; color: var(--maroon); }
+  .detail-body { font-size: 17px; line-height: 1.78; color: var(--text); }
+  .detail-body p { margin-bottom: 1.1em; }
+  .detail-body p:first-of-type::first-letter {
+    font-family: var(--serif); font-size: 4.5em; font-weight: 400;
+    float: left; line-height: 0.82; margin: 0.06em 0.08em 0 0; color: var(--maroon);
+  }
+
+  /* Gallery */
+  .gallery {
+    padding: clamp(36px, 5vw, 56px) 0;
+    background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .gallery h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(22px, 3vw, 28px); color: var(--ink); margin-bottom: 4px; }
+  .gallery .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; font-style: italic; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+  .photo-ph {
+    aspect-ratio: 4/3; background: var(--white);
+    border: 1px dashed var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 10px; color: var(--text-subtle);
+    transition: all 0.25s;
+  }
+  .photo-ph:hover { border-color: var(--maroon); background: var(--maroon-faint); color: var(--maroon); }
+  .photo-ph-icon { width: 28px; height: 28px; opacity: 0.6; }
+  .photo-ph-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600; }
+  .video-ph {
+    margin-top: 20px; aspect-ratio: 16/9; background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px; color: rgba(250,247,243,0.7);
+    position: relative; overflow: hidden;
+  }
+  .video-ph::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--ink) 0%, #111 100%);
+  }
+  .play-icon {
+    width: 64px; height: 64px; border: 1.5px solid #D48FA3;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #D48FA3; position: relative; z-index: 1;
+  }
+  .play-icon::after {
+    content: ''; width: 0; height: 0;
+    border-left: 14px solid currentColor;
+    border-top: 9px solid transparent; border-bottom: 9px solid transparent;
+    margin-left: 4px;
+  }
+  .video-ph-label {
+    font-size: 10.5px; letter-spacing: 0.24em; text-transform: uppercase;
+    font-weight: 500; position: relative; z-index: 1;
+  }
+
+  /* QR block */
+  .qr-block { padding: clamp(40px, 6vw, 68px) 0; text-align: center; background: var(--white); }
+  .qr-card {
+    max-width: 440px; margin: 0 auto; padding: 36px 28px;
+    background: var(--white); border: 1px solid var(--border-strong); position: relative;
+  }
+  .qr-card::before, .qr-card::after {
+    content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid var(--maroon);
+  }
+  .qr-card::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+  .qr-card::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+  .qr-card h4 { font-family: var(--serif); font-weight: 400; font-size: 22px; color: var(--ink); margin-bottom: 6px; }
+  .qr-card p {
+    font-size: 13.5px; color: var(--text-muted); margin-bottom: 24px;
+    max-width: 320px; margin-left: auto; margin-right: auto; line-height: 1.55;
+  }
+  .qr-box {
+    width: 180px; height: 180px; margin: 0 auto 18px;
+    padding: 10px; background: var(--white); border: 1px solid var(--border);
+  }
+  .qr-box > div, .qr-box > img { width: 100% !important; height: 100% !important; }
+  .qr-url {
+    display: inline-block; font-family: 'SF Mono', monospace; font-size: 10.5px;
+    color: var(--text-muted); word-break: break-all;
+    padding: 7px 11px; background: var(--cream);
+  }
+
+  /* Prev/Next */
+  .detail-nav {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--border); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .detail-nav a {
+    padding: 28px clamp(20px, 3vw, 36px); background: var(--white);
+    text-decoration: none; color: var(--ink); cursor: pointer;
+    display: flex; flex-direction: column; gap: 6px; transition: background 0.25s;
+  }
+  .detail-nav a:hover { background: var(--cream); color: var(--maroon); }
+  .detail-nav a.next { text-align: right; align-items: flex-end; }
+  .detail-nav a.disabled { opacity: 0.4; pointer-events: none; }
+  .detail-nav .label {
+    font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--text-muted); font-weight: 600;
+  }
+  .detail-nav .title { font-family: var(--serif); font-size: 17px; font-weight: 400; line-height: 1.2; }
+  @media (max-width: 480px) { .detail-nav .title { font-size: 14px; } .detail-nav a { padding: 22px 16px; } }
+
+  /* QR codes page */
+  .qr-page { padding: clamp(40px, 6vw, 60px) 0; }
+  .qr-intro { max-width: 700px; margin: 0 auto 48px; text-align: center; }
+  .qr-intro p {
+    font-size: clamp(14.5px, 1.65vw, 16px); color: var(--text-muted);
+    line-height: 1.65; margin-top: 16px;
+  }
+  .qr-print-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 28px; padding: 14px 28px;
+    background: var(--maroon); color: var(--white);
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    font-weight: 700; transition: background 0.2s;
+  }
+  .qr-print-btn:hover { background: var(--maroon-dark); }
+  .plaque-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+  .plaque {
+    padding: 26px 22px; background: var(--white);
+    border: 1px solid var(--border-strong); text-align: center;
+    position: relative; page-break-inside: avoid;
+  }
+  .plaque::before, .plaque::after {
+    content: ''; position: absolute; width: 14px; height: 14px; border: 1.5px solid var(--maroon);
+  }
+  .plaque::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+  .plaque::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+  .plaque-num-label {
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--text-subtle); font-weight: 700; margin-bottom: 2px;
+  }
+  .plaque-num {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: 48px; color: var(--maroon); line-height: 1; margin-bottom: 6px;
+  }
+  .plaque-title {
+    font-family: var(--serif); font-size: 16px; font-weight: 400;
+    color: var(--ink); line-height: 1.2; margin-bottom: 16px; padding: 0 8px; min-height: 38px;
+  }
+  .plaque-qr {
+    width: 130px; height: 130px; margin: 0 auto 14px;
+    padding: 8px; background: var(--white); border: 1px solid var(--border);
+  }
+  .plaque-qr > div, .plaque-qr > img { width: 100% !important; height: 100% !important; }
+  .plaque-caption {
+    font-size: 8.5px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--text-muted); font-weight: 700;
+  }
+  .plaque-caption span {
+    display: inline-block; width: 3px; height: 3px;
+    background: var(--maroon); border-radius: 50%; margin: 0 4px 2px; vertical-align: middle;
+  }
+  @media print {
+    .mockup-banner, .nav, .detail-topbar, .footer, .qr-intro, .section-head { display: none !important; }
+    body { background: #fff; }
+    .plaque-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .plaque { border: 1px solid #999; padding: 18px 12px; }
+    .plaque-num { font-size: 36px; }
+    .plaque-title { font-size: 13px; min-height: 32px; }
+    .plaque-qr { width: 110px; height: 110px; }
+  }
+
+  .view { animation: fadeUp 0.4s var(--ease); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+  <div class="mockup-banner">Committee Mock-Up · <span>Sample of 6 stops from Karel Baum's 31-stop heritage document</span></div>
+
+  <nav class="nav" id="topNav">
+    <a class="nav-brand" data-route="/">
+      <div class="crest">SP</div>
+      <div class="nav-brand-text">
+        <strong>The Heritage Trail</strong>
+        <span>SPOSA · Indooroopilly</span>
+      </div>
+    </a>
+    <div class="nav-actions">
+      <a class="nav-link" data-route="/qr-codes">Plaque Codes</a>
+    </div>
+  </nav>
+
+  <main id="app"></main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    /* Sample 6 stops from Karel Baum's 31-stop research document.
+       Selected to span: founding building, memorial, chapel, sports, nature, and final stop.
+       Full content from the SPOSA heritage document. Coordinates are placeholder — to be walked and GPS-captured. */
+    const TRAIL = {
+      intro: "St Peters Lutheran College opened its doors on 20 February 1945, with the first classes being held in the stately home 'Ross Roy', situated on 57 acres in Indooroopilly.",
+      centre: [-27.4977, 152.9714],
+      stops: [
+        {
+          id: 1, number: 1, original: 1,
+          title: "Ross Roy",
+          subtitle: "Where St Peters began",
+          era: "1897",
+          location: "Campus centre",
+          readtime: "1 min read",
+          coords: [-27.4977, 152.9712],
+          excerpt: "Our tour starts at Ross Roy, where St Peters began. The home was built in 1897 and received its name from its second owner Ross Munro, and his son Roy.",
+          details: [
+            "Our tour starts at Ross Roy, where St Peters began. The home was built in 1897 and received its name from its second owner Ross Munro, and his son Roy.",
+            "The building, at present, is used for Foundation and SPOSA administration purposes, and remains at the centre of College life. It is a focus for Old Scholars returning to the College."
+          ]
+        },
+        {
+          id: 2, number: 2, original: 2,
+          title: "Mrs Lohe's Memorial Rose Garden",
+          subtitle: "A tribute to a gracious lady",
+          era: "Dedicated 2001",
+          location: "Front of Ross Roy",
+          readtime: "1 min read",
+          coords: [-27.4975, 152.9714],
+          excerpt: "From the front steps, turning right, we arrive at Mrs Lohe's Memorial Rose Garden — a tribute to a very gracious lady affectionately remembered by many Old Scholars.",
+          details: [
+            "From the front steps, turning right, we arrive at Mrs Lohe's Memorial Rose Garden. The garden, dedicated in 2001, is a tribute to a very gracious lady affectionately remembered by many Old Scholars.",
+            "Mrs Lohe came to St Peters in 1945 following her marriage to foundation staff member Mr H W A (Bill) Lohe, Headmaster from 1956 to 1970."
+          ]
+        },
+        {
+          id: 3, number: 14, original: 14,
+          title: "The Chapel",
+          subtitle: "Focal point of the College",
+          era: "1968",
+          location: "Overlooking the quadrangle",
+          readtime: "2 min read",
+          coords: [-27.4980, 152.9714],
+          excerpt: "Overlooking the quadrangle and the focal point of the College, both physically and spiritually, is the Chapel.",
+          details: [
+            "Overlooking the quadrangle and the focal point of the College, both physically and spiritually, is the Chapel, built in 1968.",
+            "A number of surplus World War Two Army huts saw service in the early years of the College in multiple roles — as chapel, dining hall, gym, and later, drama rooms. The upper storey of Luther House was also used as a chapel.",
+            "After twenty-five years, Dr Karl Langer designed the Chapel, which was dedicated for service to the College."
+          ]
+        },
+        {
+          id: 4, number: 18, original: 18,
+          title: "Reini Mayer Oval",
+          subtitle: "Named for a lifelong servant of the College",
+          era: "1963 · Named 2002",
+          location: "Overlooked from P&F Centre",
+          readtime: "1 min read",
+          coords: [-27.4987, 152.9712],
+          excerpt: "Originally known simply as the Main Oval, it was formally named in 2002 to mark the commitment to sport by Old Scholar Pastor Reinhard Mayer.",
+          details: [
+            "Continuing down Chapel Road, on the right we come to the Parents and Friends Centre, built in 1994. The centre is host to many College functions with wonderful views overlooking the Reini Mayer Oval.",
+            "Originally simply known as the Main Oval, it was formally named in 2002 to mark the commitment to sport by Old Scholar Pastor Reinhard Mayer.",
+            "A member of the College First XV in 1949 and 1950, Pastor Mayer was also the longest-serving Chaplain with twenty-five years of service."
+          ]
+        },
+        {
+          id: 5, number: 26, original: 26,
+          title: "Barry Jahnke Rainforest Reserve",
+          subtitle: "The College is more than bricks and mortar",
+          era: "1967 · Named 2002",
+          location: "Rainforest Way",
+          readtime: "2 min read",
+          coords: [-27.4985, 152.9717],
+          excerpt: "While not a concrete structure or classroom, the Rainforest is a significant part of the heritage of the College.",
+          details: [
+            "A little further up the hill along Rainforest Way we come to the Rainforest, established in 1967. While not a concrete structure or classroom, it is a significant part of the heritage of the College — a constant reminder that the College is much more than simply bricks and mortar.",
+            "Developed out of remnant scrubby grassland, it now provides a valuable natural resource for students; however student use in the past was not always strictly legitimate…",
+            "Formally named the Barry Jahnke Rainforest Reserve in 2002, it honours the environmental commitment of a long-serving staff member."
+          ]
+        },
+        {
+          id: 6, number: 31, original: 31,
+          title: "Luther House",
+          subtitle: "The College's first major classroom building",
+          era: "1948",
+          location: "End of trail",
+          readtime: "1 min read",
+          coords: [-27.4976, 152.9714],
+          excerpt: "Walking out of Theile House we turn right and arrive at the final point of our journey — Luther House, the College's first major classroom building.",
+          details: [
+            "Walking out of Theile House we turn right and arrive at the final point of our journey at Luther House, built in 1948 — the College's first major classroom building.",
+            "The top floor has been used as a Chapel and also served as an auditorium where for many years concerts and musicals were held, while the ground floor housed classrooms, staffroom and a library.",
+            "Today it serves primarily as an administration centre, and is as much at the heart of the College as it was almost sixty years ago."
+          ]
+        }
+      ]
+    };
+
+    const app = document.getElementById('app');
+
+    function parseRoute() {
+      const h = (location.hash || '#/').replace(/^#/, '');
+      if (h === '/' || h === '') return { name: 'home' };
+      if (h === '/qr-codes') return { name: 'qr' };
+      const m = h.match(/^\/stop\/(\d+)$/);
+      if (m) {
+        const id = parseInt(m[1], 10);
+        if (TRAIL.stops.find(s => s.id === id)) return { name: 'stop', id };
+      }
+      return { name: 'home' };
+    }
+    function navigate(path) { location.hash = path; }
+    window.addEventListener('hashchange', render);
+    window.addEventListener('load', render);
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('[data-route]');
+      if (el) { e.preventDefault(); navigate(el.getAttribute('data-route')); }
+    });
+
+    function render() {
+      const r = parseRoute();
+      if (r.name === 'home') renderHome();
+      else if (r.name === 'stop') renderStop(r.id);
+      else if (r.name === 'qr') renderQR();
+      window.scrollTo(0, 0);
+    }
+
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function footerHtml() {
+      return `
+        <footer class="footer">
+          <div class="container">
+            <div class="footer-inner">
+              <div class="footer-col">
+                <div class="footer-label">About the Trail</div>
+                <h4>A project of the St Peters Old Scholars' Association</h4>
+                <p>The Heritage Trail preserves the stories of our campus for the generations to come. To contribute memories, photographs, or corrections, please contact the SPOSA committee.</p>
+              </div>
+              <div class="footer-col">
+                <div class="footer-label">Navigate</div>
+                <ul>
+                  <li><a data-route="/">The Trail</a></li>
+                  <li><a data-route="/qr-codes">Plaque Codes</a></li>
+                  <li><a href="https://www.stpeters.qld.edu.au/indooroopilly/community/sposa" target="_blank" rel="noopener">SPOSA Main Page</a></li>
+                </ul>
+              </div>
+              <div class="footer-col">
+                <div class="footer-label">Credits</div>
+                <p>Original research and compilation by Karel Baum. First drafted 2006 for the St Peters Heritage Trail.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer-base">
+            <span>© St Peters Lutheran College Indooroopilly</span>
+            <em>Saints for Life</em>
+            <span>Mock-up · ${new Date().getFullYear()}</span>
+          </div>
+        </footer>
+      `;
+    }
+
+    function renderHome() {
+      document.getElementById('topNav').classList.remove('hidden');
+      const stopsHtml = TRAIL.stops.map(s => `
+        <a class="stop-card" data-route="/stop/${s.id}">
+          <div class="stop-num">${s.number}</div>
+          <div>
+            <div class="stop-eyebrow">${esc(s.era)} · ${esc(s.location)}</div>
+            <h3 class="stop-title">${esc(s.title)}</h3>
+            <p class="stop-excerpt">${esc(s.excerpt)}</p>
+          </div>
+          <div class="stop-arrow">→</div>
+        </a>
+      `).join('');
+
+      app.innerHTML = `
+        <div class="view">
+          <section class="hero">
+            <div class="container-narrow">
+              <div class="eyebrow">SPOSA Commemorative Project</div>
+              <h1>The <span class="italic">Heritage</span> Trail</h1>
+              <div class="hero-sub">St Peters Lutheran College · Indooroopilly</div>
+              <div class="hero-meta">
+                <span class="hero-meta-item">31 Stops</span>
+                <span class="hero-meta-item">Self-guided</span>
+                <span class="hero-meta-item">Mobile &amp; QR</span>
+              </div>
+              <p class="hero-lead">${esc(TRAIL.intro)}</p>
+              <div class="hero-attribution">Researched and compiled by Karel Baum</div>
+              <a class="hero-cta" href="#trail-map">Begin the Journey <span>→</span></a>
+            </div>
+          </section>
+
+          <section class="map-section" id="trail-map">
+            <div class="container">
+              <div class="section-head">
+                <div class="eyebrow">The Route</div>
+                <h2>Follow the <span class="italic">Trail</span></h2>
+                <p>Each stop is marked on campus with a plaque. Scan its QR code to open the story on your phone — or plan your walk from here.</p>
+              </div>
+            </div>
+            <div class="map-wrap">
+              <div class="map-overlay">Campus Walking Trail</div>
+              <div id="map"></div>
+            </div>
+            <div class="container">
+              <p class="map-note">Coordinates shown are placeholder — final positions to be walked and GPS-captured prior to plaque installation.</p>
+            </div>
+          </section>
+
+          <section>
+            <div class="container">
+              <div class="section-head">
+                <div class="eyebrow">The Stories</div>
+                <h2>Stations on the <span class="italic">Trail</span></h2>
+                <p>Tap any stop to read its full history, view archival photographs, and hear from those who were there.</p>
+              </div>
+              <div class="sample-note">
+                <strong>Committee Note</strong>
+                This mock-up shows 6 representative stops from Karel Baum's 31-stop research document. The full trail — Ross Roy through to Luther House — will be populated once the template is approved. Original stop numbers from the source document are preserved.
+              </div>
+              <div class="stops-grid" style="margin-top:28px;">
+                ${stopsHtml}
+              </div>
+            </div>
+          </section>
+
+          <section class="attribution">
+            <div class="attribution-inner">
+              <div class="eyebrow" style="justify-content:center;">Source Document</div>
+              <h3>A Walk Through History</h3>
+              <p>The Heritage Trail draws on the original walking-tour narrative researched and compiled by Karel Baum in 2006, preserved in the SPOSA archive and now adapted for campus plaques and this mobile-first experience.</p>
+            </div>
+          </section>
+
+          ${footerHtml()}
+        </div>
+      `;
+      initMap();
+    }
+
+    function initMap() {
+      const map = L.map('map', {
+        center: TRAIL.centre,
+        zoom: 17,
+        scrollWheelZoom: false,
+        zoomControl: true
+      });
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd', maxZoom: 19
+      }).addTo(map);
+      L.polyline(TRAIL.stops.map(s => s.coords), {
+        color: '#8B1F3C', weight: 2.5, opacity: 0.85,
+        dashArray: '6, 7', lineCap: 'round'
+      }).addTo(map);
+      TRAIL.stops.forEach(s => {
+        const icon = L.divIcon({
+          className: 'trail-marker',
+          html: `<div class="trail-marker-inner">${s.number}</div>`,
+          iconSize: [32, 32], iconAnchor: [16, 16]
+        });
+        const m = L.marker(s.coords, { icon }).addTo(map);
+        m.bindPopup(`
+          <div class="popup">
+            <div class="popup-num">Stop ${s.number} · ${esc(s.era)}</div>
+            <div class="popup-title">${esc(s.title)}</div>
+            <a class="popup-btn" data-route="/stop/${s.id}">Read the story →</a>
+          </div>
+        `);
+      });
+      const bounds = L.latLngBounds(TRAIL.stops.map(s => s.coords));
+      map.fitBounds(bounds, { padding: [50, 50] });
+    }
+
+    function renderStop(id) {
+      document.getElementById('topNav').classList.add('hidden');
+      const idx = TRAIL.stops.findIndex(s => s.id === id);
+      const s = TRAIL.stops[idx];
+      const prev = TRAIL.stops[idx - 1];
+      const next = TRAIL.stops[idx + 1];
+      const stopUrl = `${location.origin}${location.pathname}#/stop/${s.id}`;
+      const paragraphs = s.details.map(p => `<p>${esc(p)}</p>`).join('');
+
+      app.innerHTML = `
+        <div class="view">
+          <div class="detail-topbar">
+            <a class="back-btn" data-route="/">← The Trail</a>
+            <div class="detail-progress">Stop <strong>${idx + 1}</strong> / ${TRAIL.stops.length}</div>
+          </div>
+
+          <div class="detail-hero">
+            <div class="detail-hero-num">${s.number}</div>
+            <div class="detail-hero-label">Historical photograph · Replace via SPOSA archive</div>
+          </div>
+
+          <article class="detail-content">
+            <div class="container-narrow">
+              <div class="eyebrow detail-eyebrow">Stop ${s.number} · ${esc(s.era)}</div>
+              <h1>${esc(s.title)}</h1>
+              <div class="detail-subtitle">${esc(s.subtitle)}</div>
+              <div class="detail-meta">
+                <div class="detail-meta-item"><span class="label">Era</span><span class="value">${esc(s.era)}</span></div>
+                <div class="detail-meta-item"><span class="label">Location</span><span class="value">${esc(s.location)}</span></div>
+                <div class="detail-meta-item"><span class="label">Reading Time</span><span class="value">${esc(s.readtime)}</span></div>
+              </div>
+              <div class="detail-body">${paragraphs}</div>
+            </div>
+          </article>
+
+          <section class="gallery">
+            <div class="container-narrow">
+              <h3>Gallery</h3>
+              <div class="sub">Historical photographs, artefacts, and archival documents</div>
+              <div class="gallery-grid">
+                ${[1,2,3,4].map(n => `
+                  <div class="photo-ph">
+                    <svg class="photo-ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="5" width="18" height="14" rx="1"/>
+                      <circle cx="12" cy="12" r="3.5"/>
+                      <path d="M8 5l2-2h4l2 2"/>
+                    </svg>
+                    <div class="photo-ph-label">Photo ${n}</div>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="video-ph">
+                <div class="play-icon"></div>
+                <div class="video-ph-label">Video Placeholder · Embed YouTube or Vimeo</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="qr-block">
+            <div class="container-narrow">
+              <div class="qr-card">
+                <h4>Share this stop</h4>
+                <p>This QR code also appears on the physical plaque. Scan it — or print it to take the trail with you.</p>
+                <div class="qr-box" id="stopQR"></div>
+                <div class="qr-url">${esc(stopUrl)}</div>
+              </div>
+            </div>
+          </section>
+
+          <nav class="detail-nav">
+            ${prev
+              ? `<a data-route="/stop/${prev.id}"><span class="label">← Previous Stop</span><span class="title">${esc(prev.title)}</span></a>`
+              : `<a class="disabled"><span class="label">← Start of Trail</span><span class="title">—</span></a>`}
+            ${next
+              ? `<a class="next" data-route="/stop/${next.id}"><span class="label">Next Stop →</span><span class="title">${esc(next.title)}</span></a>`
+              : `<a class="next disabled"><span class="label">End of Trail</span><span class="title">—</span></a>`}
+          </nav>
+
+          ${footerHtml()}
+        </div>
+      `;
+
+      new QRCode(document.getElementById('stopQR'), {
+        text: stopUrl, width: 160, height: 160,
+        colorDark: '#8B1F3C', colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    function renderQR() {
+      document.getElementById('topNav').classList.remove('hidden');
+      const plaques = TRAIL.stops.map(s => `
+        <div class="plaque">
+          <div class="plaque-num-label">Stop</div>
+          <div class="plaque-num">${s.number}</div>
+          <div class="plaque-title">${esc(s.title)}</div>
+          <div class="plaque-qr" id="plaque-qr-${s.id}"></div>
+          <div class="plaque-caption">Scan<span></span>Read<span></span>Explore</div>
+        </div>
+      `).join('');
+
+      app.innerHTML = `
+        <div class="view">
+          <section class="qr-page">
+            <div class="container">
+              <div class="section-head">
+                <div class="eyebrow">Physical Trail Markers</div>
+                <h2>Plaque <span class="italic">Codes</span></h2>
+              </div>
+              <div class="qr-intro">
+                <p>Each stop has its own QR code. Mount these on the physical plaques around campus — a scan opens the matching story on the visitor's phone.</p>
+                <button class="qr-print-btn" onclick="window.print()">Print Plaque Sheet</button>
+              </div>
+              <div class="plaque-grid">${plaques}</div>
+            </div>
+          </section>
+          ${footerHtml()}
+        </div>
+      `;
+      TRAIL.stops.forEach(s => {
+        const url = `${location.origin}${location.pathname}#/stop/${s.id}`;
+        new QRCode(document.getElementById(`plaque-qr-${s.id}`), {
+          text: url, width: 124, height: 124,
+          colorDark: '#8B1F3C', colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      });
+    }
+  </script>
+</body>
+</html>
