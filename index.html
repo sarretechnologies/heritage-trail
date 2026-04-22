@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#8B1F3C">
 <title>The Heritage Trail · St Peters Lutheran College Indooroopilly</title>
+<link rel="icon" type="image/png" href="img/sposa_logo.png">
+<link rel="apple-touch-icon" href="img/sposa_logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300..700&display=swap" rel="stylesheet">
@@ -98,6 +100,31 @@
     color: var(--maroon); font-weight: 600;
   }
   .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--maroon); }
+
+  /* Hero image */
+  .hero-image {
+    width: 100%; background: var(--cream-deep);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-image-wrap {
+    max-width: var(--maxw); margin: 0 auto;
+    padding: clamp(20px, 3vw, 40px) clamp(16px, 3vw, 40px) clamp(8px, 1.5vw, 14px);
+  }
+  .hero-image img {
+    display: block; width: 100%; height: auto;
+    max-height: 70vh; object-fit: cover;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.18);
+  }
+  .hero-image-caption {
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 0 clamp(16px, 3vw, 40px) clamp(20px, 3vw, 36px);
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-muted); font-weight: 500; text-align: center;
+  }
+  .hero-image-caption em {
+    font-style: italic; text-transform: none; letter-spacing: 0;
+    font-size: 12.5px; color: var(--text);
+  }
 
   /* Hero */
   .hero {
@@ -1104,6 +1131,14 @@
 
       app.innerHTML = `
         <div class="view">
+          <section class="hero-image">
+            <div class="hero-image-wrap">
+              <img src="img/ross-roy-1922.jpg" alt="Ross Roy viewed from the gravel driveway, 1922">
+            </div>
+            <div class="hero-image-caption">
+              <em>Ross Roy from the gravel driveway, 1922</em> · State Library of Queensland
+            </div>
+          </section>
           <section class="hero">
             <div class="container-narrow">
               <div class="eyebrow">SPOSA Commemorative Project</div>
