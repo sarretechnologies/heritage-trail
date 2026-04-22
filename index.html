@@ -1676,17 +1676,6 @@
 
           ${galleryHtml}
 
-          <section class="qr-block">
-            <div class="container-narrow">
-              <div class="qr-card">
-                <h4>Share this stop</h4>
-                <p>This QR code also appears on the physical plaque. Scan it — or print it to take the trail with you.</p>
-                <div class="qr-box" id="stopQR"></div>
-                <div class="qr-url">${esc(stopUrl)}</div>
-              </div>
-            </div>
-          </section>
-
           <nav class="detail-nav">
             ${prev
               ? `<a data-route="/stop/${prev.id}"><span class="label">← Previous Stop</span><span class="title">${esc(prev.title)}</span></a>`
@@ -1699,12 +1688,6 @@
           ${footerHtml()}
         </div>
       `;
-
-      new QRCode(document.getElementById('stopQR'), {
-        text: stopUrl, width: 160, height: 160,
-        colorDark: '#8B1F3C', colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.H
-      });
     }
 
     function renderQR() {
