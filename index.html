@@ -62,11 +62,11 @@
   }
   .nav-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); cursor: pointer; }
   .crest {
-    width: 42px; height: 42px; background: var(--maroon); color: var(--white);
+    width: 48px; height: 48px;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--serif); font-size: 19px; position: relative;
+    flex-shrink: 0;
   }
-  .crest::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(255,255,255,0.4); }
+  .crest img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .nav-brand-text strong {
     display: block; font-family: var(--serif); font-weight: 400;
     font-size: 17px; color: var(--ink); line-height: 1.1;
@@ -86,7 +86,7 @@
   @media (max-width: 560px) {
     .nav-link { padding: 9px 12px; font-size: 10px; }
     .nav-brand-text strong { font-size: 15px; }
-    .crest { width: 38px; height: 38px; font-size: 17px; }
+    .crest { width: 42px; height: 42px; }
   }
 
   /* Shared */
@@ -560,7 +560,7 @@
 
   <nav class="nav" id="topNav">
     <a class="nav-brand" data-route="/">
-      <div class="crest">SP</div>
+      <div class="crest"><img src="img/sposa_logo.png" alt="SPOSA crest"></div>
       <div class="nav-brand-text">
         <strong>The Heritage Trail</strong>
         <span>SPOSA · Indooroopilly</span>
@@ -576,12 +576,13 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
-    /* Sample 6 stops from Karel Baum's 31-stop research document.
-       Selected to span: founding building, memorial, chapel, sports, nature, and final stop.
-       Full content from the SPOSA heritage document. Coordinates are placeholder — to be walked and GPS-captured. */
+    /* All 31 stops from Karel Baum's research document "St Peters – A Walk Through History" (2006).
+       Coordinates are PLACEHOLDERS distributed across the actual St Peters Lutheran College campus
+       footprint (66 Harts Rd, Indooroopilly). Final lat/lng to be walked and GPS-captured prior to
+       plaque installation. */
     const TRAIL = {
       intro: "St Peters Lutheran College opened its doors on 20 February 1945, with the first classes being held in the stately home 'Ross Roy', situated on 57 acres in Indooroopilly.",
-      centre: [-27.4977, 152.9714],
+      centre: [-27.5040, 152.9720],
       stops: [
         {
           id: 1, number: 1, original: 1,
@@ -590,7 +591,7 @@
           era: "1897",
           location: "Campus centre",
           readtime: "1 min read",
-          coords: [-27.4977, 152.9712],
+          coords: [-27.5042, 152.9718],
           excerpt: "Our tour starts at Ross Roy, where St Peters began. The home was built in 1897 and received its name from its second owner Ross Munro, and his son Roy.",
           details: [
             "Our tour starts at Ross Roy, where St Peters began. The home was built in 1897 and received its name from its second owner Ross Munro, and his son Roy.",
@@ -604,7 +605,7 @@
           era: "Dedicated 2001",
           location: "Front of Ross Roy",
           readtime: "1 min read",
-          coords: [-27.4975, 152.9714],
+          coords: [-27.5040, 152.9719],
           excerpt: "From the front steps, turning right, we arrive at Mrs Lohe's Memorial Rose Garden — a tribute to a very gracious lady affectionately remembered by many Old Scholars.",
           details: [
             "From the front steps, turning right, we arrive at Mrs Lohe's Memorial Rose Garden. The garden, dedicated in 2001, is a tribute to a very gracious lady affectionately remembered by many Old Scholars.",
@@ -612,13 +613,167 @@
           ]
         },
         {
-          id: 3, number: 14, original: 14,
+          id: 3, number: 3, original: 3,
+          title: "Girls Dormitory Block",
+          subtitle: "From timber huts to brick dorms",
+          era: "1961",
+          location: "Boarding precinct",
+          readtime: "1 min read",
+          coords: [-27.5038, 152.9720],
+          excerpt: "From the garden steps we face the Girls Boarding area. Part of the original World War Two timber building is now a study centre and part still functions as dormitories.",
+          details: [
+            "From the garden steps we face the Girls Boarding area. Part of the original World War Two timber building is now a study centre, and part still functions as dormitories.",
+            "To the right is the brick Girls Dormitory block, built in 1961."
+          ]
+        },
+        {
+          id: 4, number: 4, original: 4,
+          title: "Finger House",
+          subtitle: "Named for a long-serving Governess",
+          era: "1972",
+          location: "Behind the Girls Dorms",
+          readtime: "1 min read",
+          coords: [-27.5037, 152.9722],
+          excerpt: "Behind the Girls Dorms is Finger House, a multi-level boarding complex named after long-serving Girls' Governess, Erica Finger.",
+          details: [
+            "Behind the Girls Dorms is Finger House (1972), a multi-level boarding complex named after long-serving Girls' Governess, Erica Finger.",
+            "For boarder girls there was always the rush before the cry 'Lights out!', the anticipation of midnight feasts, fear of being 'sprung' for all sorts of misdeeds…"
+          ]
+        },
+        {
+          id: 5, number: 5, original: 5,
+          title: "The 'Back Track' / 'Goat Track'",
+          subtitle: "Boarder girls' shortcut to campus",
+          era: "Early College days",
+          location: "Right of Finger House",
+          readtime: "1 min read",
+          coords: [-27.5036, 152.9724],
+          excerpt: "In a previous era a track ran down the hill next to the boundary fence at the right of Finger House — known as the 'Back Track' or 'Goat Track'.",
+          details: [
+            "In a previous era a track ran down the hill next to the boundary fence at the right of Finger House. Known as the 'Back Track' or 'Goat Track', it was used in early College days as a short-cut to the College buildings by boarder girls living at 'Walella'."
+          ]
+        },
+        {
+          id: 6, number: 6, original: 6,
+          title: "'Walella'",
+          subtitle: "An elegant first hostel for boarder girls",
+          era: "1945–1948",
+          location: "Cnr Kew & Hunter Streets",
+          readtime: "1 min read",
+          coords: [-27.5034, 152.9706],
+          excerpt: "An elegant home on the corner of nearby Kew and Hunter Streets which functioned as a hostel for boarder girls and female staff for the College's first three years.",
+          details: [
+            "'Walella' was an elegant home on the corner of nearby Kew and Hunter Streets which functioned as a hostel for boarder girls and female staff for the College's first three years.",
+            "It has been restored and is again functioning as a private home."
+          ]
+        },
+        {
+          id: 7, number: 7, original: 7,
+          title: "Middle School",
+          subtitle: "Established along College Drive",
+          era: "1978",
+          location: "Off Harts Road entrance",
+          readtime: "1 min read",
+          coords: [-27.5048, 152.9720],
+          excerpt: "Passing by the dormitories we come to the main College entrance at Harts Road. As you enter along College Drive, to the right is the Middle School complex.",
+          details: [
+            "Passing by the dormitories we come to the main College entrance at Harts Road. As you enter the College grounds along College Drive to the right is the Middle School complex, established in 1978.",
+            "Originally housed in a number of the old wartime timber buildings, it is now complete with modern classroom blocks and oval. Located here too was the Nature Reserve (complete with a temperamental emu and wallabies…) and from the 1970s to the 1990s the residence of Dr C Dron, Headmaster 1971 to 1994."
+          ]
+        },
+        {
+          id: 8, number: 8, original: 8,
+          title: "Old Grade Seven Building",
+          subtitle: "An elegant timber pavilion",
+          era: "1946",
+          location: "Middle School precinct",
+          readtime: "1 min read",
+          coords: [-27.5047, 152.9722],
+          excerpt: "The brightly painted two-storey timber building is the Old Grade Seven building — in 1946 nestling among the bunyas and bottle trees, it looked more like a pavilion.",
+          details: [
+            "The brightly painted two-storey timber building is the Old Grade Seven building. In 1946 this elegant structure nestling among the bunyas and bottle trees looked more like a pavilion with large windows and open doorways.",
+            "By 1947 it was the Sub-Junior classroom. In the 50s and 60s it became the Grade seven and eight classrooms. In the 1970s it housed the two Grade Seven classes. Today it is part of the Middle School."
+          ]
+        },
+        {
+          id: 9, number: 9, original: 9,
+          title: "Lohe House",
+          subtitle: "Honouring the second Headmaster",
+          era: "1973",
+          location: "College Road, near the main campus",
+          readtime: "1 min read",
+          coords: [-27.5044, 152.9720],
+          excerpt: "Heading up to the main campus, on the left we pass Lohe House — a classroom block named in honour of the College's second Headmaster, Mr Bill Lohe.",
+          details: [
+            "Continuing along College Road we head up to the main campus where on the left hand side we pass Lohe House (1973).",
+            "Located on what was originally a tennis court and then the girls' lawn basketball courts nestled among high hedges, this classroom block of eight general classrooms, staff room and music centre area was named in honour of the College's second Headmaster, Mr Bill Lohe."
+          ]
+        },
+        {
+          id: 10, number: 10, original: 10,
+          title: "The Library",
+          subtitle: "Named for the College's first architect",
+          era: "1972",
+          location: "Adjacent to Lohe House",
+          readtime: "2 min read",
+          coords: [-27.5043, 152.9721],
+          excerpt: "Adjacent to Lohe House is the Library — state-of-the-art for its time, designed by Eric Parups and named after Dr Karl Langer.",
+          details: [
+            "Adjacent to Lohe House is the Library (1972). The building, state-of-the-art for its time, was seen as a teaching and learning centre, with an audio-visual room, individual study carrels and lecture rooms.",
+            "The Library, designed by Eric Parups, is named after Dr Karl Langer, the College's first architect, who died in 1970.",
+            "The recently installed stained glass window to the right of the main entrance is a memorial to W C Schneider, Headmaster, planned by his wife. We'd love ideas for a matching window on the opposite side — any suggestions?"
+          ]
+        },
+        {
+          id: 11, number: 11, original: 11,
+          title: "Schneider Block",
+          subtitle: "Commemorating the first Headmaster",
+          era: "1983",
+          location: "Right of the Library",
+          readtime: "1 min read",
+          coords: [-27.5043, 152.9723],
+          excerpt: "Schneider commemorates a 'first' — a tangible reminder of the College's first Headmaster Wilfred Schneider ('Bossy'), who remained on staff until his death at 80.",
+          details: [
+            "To the right of the Library are Schneider (1983) and Dohler (1994) classroom blocks.",
+            "Schneider commemorates another 'first' – a tangible reminder of the College's first Headmaster Wilfred Schneider ('Bossy') who remained on the College staff until his death at the age of 80 years. Science and computer studies are held here."
+          ]
+        },
+        {
+          id: 12, number: 12, original: 12,
+          title: "Dohler Block",
+          subtitle: "Named for the founding Committee Chairman",
+          era: "1994",
+          location: "Right of the Library",
+          readtime: "1 min read",
+          coords: [-27.5044, 152.9724],
+          excerpt: "Dohler is named after Pastor Gerhard Dohler, Chairman of the original Committee of Direction responsible for founding St Peters.",
+          details: [
+            "Dohler is named after Pastor Gerhard Dohler, Chairman of the original Committee of Direction, responsible for the founding of St Peters.",
+            "The building is home to mostly Senior classes."
+          ]
+        },
+        {
+          id: 13, number: 13, original: 13,
+          title: "Science Block",
+          subtitle: "Original chemistry, physics and science labs",
+          era: "1967",
+          location: "Right side of the quadrangle",
+          readtime: "1 min read",
+          coords: [-27.5045, 152.9723],
+          excerpt: "Fronting the right hand side of the quadrangle is the Science Block — originally housing three main laboratories for chemistry, physics and general science.",
+          details: [
+            "To the front of Dohler Block and fronting the right hand side of the quadrangle is the Science Block (1967).",
+            "This complex originally housed three main laboratories for chemistry, physics and general science, with laboratories for biology and geology added later. Current renovations will bring the laboratory facilities up to contemporary standards."
+          ]
+        },
+        {
+          id: 14, number: 14, original: 14,
           title: "The Chapel",
           subtitle: "Focal point of the College",
           era: "1968",
           location: "Overlooking the quadrangle",
           readtime: "2 min read",
-          coords: [-27.4980, 152.9714],
+          coords: [-27.5042, 152.9722],
           excerpt: "Overlooking the quadrangle and the focal point of the College, both physically and spiritually, is the Chapel.",
           details: [
             "Overlooking the quadrangle and the focal point of the College, both physically and spiritually, is the Chapel, built in 1968.",
@@ -627,28 +782,168 @@
           ]
         },
         {
-          id: 4, number: 18, original: 18,
+          id: 15, number: 15, original: 15,
+          title: "WWII Sandstone Monument",
+          subtitle: "Commemorating church members' service",
+          era: "Pre-1954",
+          location: "Right of the Chapel",
+          readtime: "1 min read",
+          coords: [-27.5041, 152.9723],
+          excerpt: "To the right of the Chapel stands a sandstone monument commemorating the World War Two service of members of the church.",
+          details: [
+            "To the right of the Chapel stands a sandstone monument commemorating the World War Two service of members of the church.",
+            "This was originally erected in front of the first permanent Boys Dormitory."
+          ]
+        },
+        {
+          id: 16, number: 16, original: 16,
+          title: "Boys Dormitory",
+          subtitle: "Ludcke, Mutze and Schilling — the three 'Freds'",
+          era: "1954",
+          location: "Right of the Chapel",
+          readtime: "1 min read",
+          coords: [-27.5041, 152.9725],
+          excerpt: "The first permanent Boys Dormitory was drawn up into a formal 'House' structure in 1983 — Ludcke, Mutze and Schilling — honouring the three 'Freds'.",
+          details: [
+            "The boys dorms were drawn up into a formal 'House' structure in 1983 with Ludcke, Mutze and Schilling honouring the three 'Freds' on the first Committee of Management: Fred Ludcke, Fred Mutze and Fred Schilling.",
+            "'Buck Palace' and 'Windsor Castle', two of the dorms, are still popular residences for boarder boys."
+          ]
+        },
+        {
+          id: 17, number: 17, original: 17,
+          title: "Parents and Friends Centre",
+          subtitle: "Host to many College functions",
+          era: "1994",
+          location: "Down Chapel Road",
+          readtime: "1 min read",
+          coords: [-27.5045, 152.9726],
+          excerpt: "Continuing down Chapel Road, on the right we come to the Parents and Friends Centre — host to many College functions, with wonderful views overlooking the Reini Mayer Oval.",
+          details: [
+            "Continuing down Chapel Road, on the right we come to the Parents and Friends Centre (1994).",
+            "The centre is host to many College functions with wonderful views overlooking the Reini Mayer Oval."
+          ]
+        },
+        {
+          id: 18, number: 18, original: 18,
           title: "Reini Mayer Oval",
           subtitle: "Named for a lifelong servant of the College",
           era: "1963 · Named 2002",
           location: "Overlooked from P&F Centre",
           readtime: "1 min read",
-          coords: [-27.4987, 152.9712],
+          coords: [-27.5047, 152.9728],
           excerpt: "Originally known simply as the Main Oval, it was formally named in 2002 to mark the commitment to sport by Old Scholar Pastor Reinhard Mayer.",
           details: [
-            "Continuing down Chapel Road, on the right we come to the Parents and Friends Centre, built in 1994. The centre is host to many College functions with wonderful views overlooking the Reini Mayer Oval.",
             "Originally simply known as the Main Oval, it was formally named in 2002 to mark the commitment to sport by Old Scholar Pastor Reinhard Mayer.",
             "A member of the College First XV in 1949 and 1950, Pastor Mayer was also the longest-serving Chaplain with twenty-five years of service."
           ]
         },
         {
-          id: 5, number: 26, original: 26,
+          id: 19, number: 19, original: 19,
+          title: "Tennis Courts & 50 Metre Pool",
+          subtitle: "Built with P&F support",
+          era: "1985",
+          location: "Returning up Chapel Road",
+          readtime: "1 min read",
+          coords: [-27.5044, 152.9728],
+          excerpt: "Returning up Chapel Road, on the right we pass the tennis courts and fifty metre pool — designed for competitive swimming with spectator stands and night lighting.",
+          details: [
+            "Returning up Chapel Road, on the right we pass the tennis courts and fifty metre pool (1985), designed for competitive swimming with spectator stands and night lighting.",
+            "It's a vast improvement on the wobbly spectator stands of the old Valley Baths! This facility is just one of many built with the assistance of the P & F Association."
+          ]
+        },
+        {
+          id: 20, number: 20, original: 20,
+          title: "Refectory ('Café 45')",
+          subtitle: "Seating for 400 — many memories",
+          era: "1966 · Refurbished 2005–06",
+          location: "At the quadrangle",
+          readtime: "2 min read",
+          coords: [-27.5042, 152.9720],
+          excerpt: "Arriving back at the quadrangle we pass the Refectory, with seating for 400 — refurbished and renamed 'Café 45' after the College's founding year.",
+          details: [
+            "Arriving back at the quadrangle we pass the Refectory (1966) with seating for 400 in the main hall. Boarders had previously dined in one of the old Army huts.",
+            "Food, of course, features prominently in the life of boarders and so the 'Refec' holds many memories – trembling trays of junket, 'weedy' (off) milk, the thrill of being able to cut your slice of bread into quarters instead of eighths, scrounging leftovers to feed that hungry Senior at the head of your table…",
+            "Refurbished during 2005–2006, this facility has now been renamed 'Café 45' after the College's founding year."
+          ]
+        },
+        {
+          id: 21, number: 21, original: 21,
+          title: "Gymnasium",
+          subtitle: "By P&F President Eric Parups",
+          era: "1982",
+          location: "Behind 'Café 45'",
+          readtime: "1 min read",
+          coords: [-27.5043, 152.9719],
+          excerpt: "Directly behind 'Café 45' is the Gymnasium — designed by architect and P&F Association President Eric Parups.",
+          details: [
+            "Proceeding along Chapel Road and directly behind 'Café 45' is the Gymnasium (1982).",
+            "The original plan was for a combined gymnasium-concert hall but the final building, designed by architect and P&F Association President Eric Parups, was a gymnasium incorporating classrooms, weight training rooms and much needed space for various ball and court games. It has also functioned well as a venue for school dances."
+          ]
+        },
+        {
+          id: 22, number: 22, original: 22,
+          title: "Preparatory Centre",
+          subtitle: "First step in the St Peters journey",
+          era: "2002",
+          location: "Down Chapel Road",
+          readtime: "1 min read",
+          coords: [-27.5048, 152.9716],
+          excerpt: "The recently completed Preparatory Centre — providing the first step in the complete St Peters educational experience.",
+          details: [
+            "Proceeding down the hill along Chapel Road we pass on the right hand side, tucked into the hill at the end of the Works Department car park, the Plant Nursery and Apiculture Shed. One of the old cross-country runs came this way — though the hills were much steeper then.",
+            "We pass the Works Department facilities on the right and come to the recently completed Preparatory Centre (2002). Located where former Deputy Head of Services Janelle Anderson's home once stood, this new facility now provides the first step in the complete St Peters educational experience."
+          ]
+        },
+        {
+          id: 23, number: 23, original: 23,
+          title: "Stolz Oval",
+          subtitle: "Named for Pastor J G Stolz",
+          era: "1947",
+          location: "Junior School precinct",
+          readtime: "1 min read",
+          coords: [-27.5050, 152.9714],
+          excerpt: "One of the first sporting facilities of the College, named after Pastor J G Stolz — Secretary and Chairman of the College Council for many years.",
+          details: [
+            "We now cross Stolz Oval (1947), one of the first sporting facilities of the College and named after Pastor J G Stolz, a Secretary and Chairman of the College Council for many years.",
+            "It was remodeled in the late 1970s and from 1980 has been used solely by the Junior School."
+          ]
+        },
+        {
+          id: 24, number: 24, original: 24,
+          title: "Junior School",
+          subtitle: "Opened and dedicated 1974",
+          era: "1974",
+          location: "South-west of campus",
+          readtime: "1 min read",
+          coords: [-27.5052, 152.9716],
+          excerpt: "The Junior School, opened and dedicated in 1974, actually began the previous year with Grades One and Two located in temporary accommodation.",
+          details: [
+            "The Junior School, opened and dedicated in 1974, actually began the previous year with Grades One and Two located in temporary accommodation.",
+            "Major changes have taken place over the life of the Junior School, in particular the move to double-streaming the whole campus."
+          ]
+        },
+        {
+          id: 25, number: 25, original: 25,
+          title: "25 Metre Pool",
+          subtitle: "Built by staff, students and P&F volunteers",
+          era: "1965",
+          location: "Up the hill from Junior School",
+          readtime: "1 min read",
+          coords: [-27.5048, 152.9719],
+          excerpt: "From the Junior School we walk up past the twenty-five metre pool — in those less regulated days, built with labour from staff, students and P&F volunteers.",
+          details: [
+            "From the Junior School we walk up past another of the College's major building projects: the twenty-five metre pool (1965).",
+            "In those less regulated days it was possible to complete a project such as this with labour provided by staff, students and P & F volunteers. The construction of the pool finally saw an end to the weekly trips to the Toowong Baths (now filled in and awaiting redevelopment)."
+          ]
+        },
+        {
+          id: 26, number: 26, original: 26,
           title: "Barry Jahnke Rainforest Reserve",
-          subtitle: "The College is more than bricks and mortar",
+          subtitle: "More than bricks and mortar",
           era: "1967 · Named 2002",
           location: "Rainforest Way",
           readtime: "2 min read",
-          coords: [-27.4985, 152.9717],
+          coords: [-27.5045, 152.9730],
           excerpt: "While not a concrete structure or classroom, the Rainforest is a significant part of the heritage of the College.",
           details: [
             "A little further up the hill along Rainforest Way we come to the Rainforest, established in 1967. While not a concrete structure or classroom, it is a significant part of the heritage of the College — a constant reminder that the College is much more than simply bricks and mortar.",
@@ -657,13 +952,70 @@
           ]
         },
         {
-          id: 6, number: 31, original: 31,
+          id: 27, number: 27, original: 27,
+          title: "'Taj Mahal' Girls Dorm",
+          subtitle: "An Army hut still in use",
+          era: "WWII era",
+          location: "Across Rainforest Way",
+          readtime: "1 min read",
+          coords: [-27.5044, 152.9731],
+          excerpt: "One of the remaining Army huts still in use, colloquially known as 'Taj Mahal' — home to literally hundreds of girls over the life of the College.",
+          details: [
+            "As we look right across Rainforest Way we see one of the remaining Army huts still in use and colloquially known as 'Taj Mahal' (Girls Dorms), home to literally hundreds of girls over the life of the College."
+          ]
+        },
+        {
+          id: 28, number: 28, original: 28,
+          title: "Herb Zillmann Technology Centre",
+          subtitle: "Named for an Old Scholar and Council member",
+          era: "1999",
+          location: "Rainforest Way",
+          readtime: "1 min read",
+          coords: [-27.5043, 152.9729],
+          excerpt: "Named in honour of Old Scholar and member of the College Council 1980–1995, this multi-purpose building houses food technology and fashion courses among others.",
+          details: [
+            "Retracing our steps along Rainforest Way we arrive at the Herb Zillmann Technology Centre (1999).",
+            "Named in honour of Old Scholar and member of the College Council 1980–1995, this multi-purpose building houses food technology and fashion courses among others."
+          ]
+        },
+        {
+          id: 29, number: 29, original: 29,
+          title: "Visual Arts Block",
+          subtitle: "Spinning, weaving, sculpture and more",
+          era: "1979",
+          location: "Adjacent to Herb Zillmann Centre",
+          readtime: "1 min read",
+          coords: [-27.5042, 152.9728],
+          excerpt: "Another building designed by Eric Parups — allowing students to explore spinning, weaving, manual arts, drawing and sculpture.",
+          details: [
+            "Adjacent is the Visual Arts block (1979). Another building designed by Eric Parups, it allows students to explore such diverse areas as spinning, weaving, manual arts, drawing and sculpture.",
+            "It also houses a small theatre and exhibition area. For many years during Herbstfest this building was a hive of crafty fundraising activity. Enjoy the artworks of current students as we pass by."
+          ]
+        },
+        {
+          id: 30, number: 30, original: 30,
+          title: "Theile House",
+          subtitle: "Honouring Rev Dr F Otto Theile",
+          era: "1959 · Rededicated 2005",
+          location: "Up the steps from the Refectory",
+          readtime: "2 min read",
+          coords: [-27.5040, 152.9722],
+          excerpt: "Originally dedicated in 1959 by Governor Sir Henry Abel Smith — named in honour of Rev Dr F Otto Theile, with long association to the Lutheran Church's missions.",
+          details: [
+            "From here we walk towards the Refectory and up the steps to Theile House. Theile House was originally dedicated on 20 June 1959 and officially opened by Governor Colonel Sir Henry Abel Smith.",
+            "The building was named in honour of Rev Dr F Otto Theile, who had a long association with the Lutheran Church of Australia's Aboriginal and PNG missions from 1920 – 1945.",
+            "For many years a classroom block, Theile House was rededicated in 2005 after being refurbished. While much of the southern exterior remains, the rest of Theile House has been internally and externally modernised. Some interesting student graffiti was exposed in the roof during the renovations — can anyone put a name to the artist(s)? Although the new roof is on, there is a visual record of the 'artwork' on file in the archives.",
+            "New classrooms, staffrooms and a new Senior Study Centre, and lift access to the building, will see Theile House continue to serve the College for many years to come."
+          ]
+        },
+        {
+          id: 31, number: 31, original: 31,
           title: "Luther House",
           subtitle: "The College's first major classroom building",
           era: "1948",
           location: "End of trail",
           readtime: "1 min read",
-          coords: [-27.4976, 152.9714],
+          coords: [-27.5039, 152.9721],
           excerpt: "Walking out of Theile House we turn right and arrive at the final point of our journey — Luther House, the College's first major classroom building.",
           details: [
             "Walking out of Theile House we turn right and arrive at the final point of our journey at Luther House, built in 1948 — the College's first major classroom building.",
@@ -831,10 +1183,12 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd', maxZoom: 19
       }).addTo(map);
-      L.polyline(TRAIL.stops.map(s => s.coords), {
+      const trailLine = L.polyline(TRAIL.stops.map(s => s.coords), {
         color: '#8B1F3C', weight: 2.5, opacity: 0.85,
         dashArray: '6, 7', lineCap: 'round'
       }).addTo(map);
+      // Auto-frame the map to show every stop with a bit of breathing room
+      map.fitBounds(trailLine.getBounds(), { padding: [40, 40], maxZoom: 18 });
       TRAIL.stops.forEach(s => {
         const icon = L.divIcon({
           className: 'trail-marker',
