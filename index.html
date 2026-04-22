@@ -579,6 +579,219 @@
     to { opacity: 1; transform: translateY(0); }
   }
   .hidden { display: none !important; }
+
+  /* Nav CTA variant */
+  .nav-link-cta {
+    background: var(--maroon); color: #fff !important;
+    padding: 10px 18px; border-radius: 999px;
+    font-weight: 600; letter-spacing: 0.04em;
+    transition: background 0.18s var(--ease);
+  }
+  .nav-link-cta:hover { background: var(--maroon-dark); }
+
+  /* Submit CTA section on home */
+  .submit-cta {
+    padding: clamp(56px, 8vw, 96px) 0;
+    text-align: center;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .submit-cta h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(32px, 5vw, 52px); line-height: 1.05;
+    color: var(--ink); margin: 16px 0 18px;
+  }
+  .submit-cta p {
+    color: var(--text); font-size: 17px; line-height: 1.65;
+    max-width: 640px; margin: 0 auto 32px;
+  }
+
+  /* Submit form page */
+  .submit-hero {
+    padding: clamp(56px, 7vw, 92px) 0 clamp(32px, 4vw, 48px);
+    background: var(--cream); text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .submit-hero h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(36px, 6vw, 68px); line-height: 1;
+    letter-spacing: -0.02em; color: var(--ink);
+    margin: 18px 0 22px;
+  }
+  .submit-lead {
+    font-size: 17px; line-height: 1.7;
+    color: var(--text); max-width: 640px; margin: 0 auto 18px;
+  }
+  .submit-meta-note {
+    font-size: 13px; color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .submit-form-section {
+    padding: clamp(40px, 6vw, 72px) 0 clamp(56px, 8vw, 96px);
+    background: var(--cream-deep);
+  }
+
+  .submit-form {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: clamp(28px, 4vw, 56px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+
+  .form-section {
+    border: none; padding: 0; margin: 0 0 44px;
+    border-top: 1px solid var(--border); padding-top: 36px;
+  }
+  .form-section:first-of-type { border-top: none; padding-top: 0; }
+  .form-section legend {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(22px, 3vw, 32px); color: var(--ink);
+    margin-bottom: 8px; padding: 0;
+    display: flex; align-items: baseline; gap: 14px;
+  }
+  .form-section-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--maroon); color: #fff;
+    font-family: var(--sans); font-size: 14px; font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .legend-opt {
+    font-family: var(--sans); font-size: 13px; color: var(--text-muted);
+    font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .form-section-intro {
+    font-size: 14px; color: var(--text-muted); line-height: 1.6;
+    margin: 6px 0 24px;
+  }
+
+  .form-row { margin-bottom: 22px; }
+  .form-row > label {
+    display: block; font-size: 13px; font-weight: 600;
+    color: var(--ink); letter-spacing: 0.04em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .req { color: var(--maroon); font-weight: 700; }
+
+  .form-row input[type="text"],
+  .form-row input[type="email"],
+  .form-row input[type="tel"],
+  .form-row input[type="file"],
+  .form-row select,
+  .form-row textarea {
+    width: 100%; box-sizing: border-box;
+    font-family: var(--sans); font-size: 15px;
+    color: var(--ink); background: #fff;
+    border: 1px solid var(--border); border-radius: 3px;
+    padding: 12px 14px;
+    transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+  }
+  .form-row input:focus,
+  .form-row select:focus,
+  .form-row textarea:focus {
+    outline: none; border-color: var(--maroon);
+    box-shadow: 0 0 0 3px rgba(139, 31, 60, 0.12);
+  }
+  .form-row select {
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%238B1F3C' d='M6 8L0 0h12z'/></svg>");
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 40px;
+  }
+  .form-row textarea { resize: vertical; min-height: 100px; line-height: 1.55; }
+  .form-row input[type="file"] { padding: 8px; font-size: 13px; }
+
+  .form-hint {
+    font-size: 12.5px; color: var(--text-muted);
+    margin: 6px 0 0; line-height: 1.5; letter-spacing: 0.01em;
+  }
+  .word-count {
+    font-weight: 600; color: var(--maroon);
+  }
+
+  .checkbox-group, .radio-group {
+    border: 1px solid var(--border); border-radius: 3px;
+    padding: 14px 16px 6px; margin: 0;
+  }
+  .cg-legend {
+    font-family: var(--sans); font-size: 13px; font-weight: 600;
+    color: var(--ink); letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 0 6px;
+  }
+  .cb, .rb {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14.5px; color: var(--text); line-height: 1.5;
+    padding: 6px 0; cursor: pointer;
+  }
+  .cb input, .rb input {
+    margin: 3px 0 0; accent-color: var(--maroon);
+    width: 16px; height: 16px; flex-shrink: 0;
+  }
+  .cb-block {
+    border: 1px solid var(--border); border-radius: 3px;
+    padding: 14px 16px; background: var(--cream);
+  }
+  .cb-block input { margin-top: 4px; }
+  .cb-block a { color: var(--maroon); text-decoration: underline; }
+
+  .form-actions {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    margin-top: 36px; padding-top: 32px;
+    border-top: 1px solid var(--border);
+    justify-content: flex-end;
+  }
+  .btn-primary, .btn-ghost {
+    font-family: var(--sans); font-size: 14px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 14px 28px; border-radius: 999px; cursor: pointer;
+    transition: all 0.18s var(--ease);
+    border: 1px solid var(--maroon);
+  }
+  .btn-primary { background: var(--maroon); color: #fff; }
+  .btn-primary:hover { background: var(--maroon-dark); border-color: var(--maroon-dark); }
+  .btn-ghost { background: transparent; color: var(--maroon); }
+  .btn-ghost:hover { background: var(--maroon); color: #fff; }
+
+  .form-foot {
+    margin: 24px 0 0; font-size: 13.5px;
+    color: var(--text-muted); text-align: center;
+  }
+  .form-foot a { color: var(--maroon); text-decoration: underline; }
+  .form-mockup-note {
+    margin: 14px 0 0; font-size: 12.5px;
+    color: var(--text-muted); text-align: center;
+    background: var(--cream); border: 1px dashed var(--border);
+    border-radius: 3px; padding: 10px 14px; line-height: 1.55;
+  }
+  .form-mockup-note strong { color: var(--maroon); }
+
+  .submit-success {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 4px; padding: 60px 40px; text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+  .submit-success .check {
+    width: 64px; height: 64px; margin: 0 auto 22px;
+    border-radius: 50%; background: var(--maroon); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; font-weight: 600;
+  }
+  .submit-success h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 36px; color: var(--ink); margin: 0 0 14px;
+  }
+  .submit-success p {
+    color: var(--text); font-size: 16px; line-height: 1.7;
+    max-width: 480px; margin: 0 auto 28px;
+  }
+
+  @media (max-width: 600px) {
+    .submit-form { padding: 22px 18px; }
+    .form-actions { flex-direction: column-reverse; }
+    .form-actions button { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -594,6 +807,7 @@
     </a>
     <div class="nav-actions">
       <a class="nav-link" data-route="/qr-codes">Plaque Codes</a>
+      <a class="nav-link nav-link-cta" data-route="/submit">Submit a Story</a>
     </div>
   </nav>
 
@@ -1058,6 +1272,7 @@
       const h = (location.hash || '#/').replace(/^#/, '');
       if (h === '/' || h === '') return { name: 'home' };
       if (h === '/qr-codes') return { name: 'qr' };
+      if (h === '/submit') return { name: 'submit' };
       const m = h.match(/^\/stop\/(\d+)$/);
       if (m) {
         const id = parseInt(m[1], 10);
@@ -1078,6 +1293,7 @@
       if (r.name === 'home') renderHome();
       else if (r.name === 'stop') renderStop(r.id);
       else if (r.name === 'qr') renderQR();
+      else if (r.name === 'submit') renderSubmit();
       window.scrollTo(0, 0);
     }
 
@@ -1100,6 +1316,7 @@
                 <ul>
                   <li><a data-route="/">The Trail</a></li>
                   <li><a data-route="/qr-codes">Plaque Codes</a></li>
+                  <li><a data-route="/submit">Submit a Story</a></li>
                   <li><a href="https://www.stpeters.qld.edu.au/indooroopilly/community/sposa" target="_blank" rel="noopener">SPOSA Main Page</a></li>
                 </ul>
               </div>
@@ -1178,6 +1395,15 @@
               </div>
               <p style="margin-bottom:18px;">Much of that history lives only in the memories of those who were there — in fading newsletters, in conversations at reunions, in family stories passed down through generations of alumni families. The founding Headmaster's dream, the story of Ross Roy House (the only building from early College life still standing today), the introduction of the Ironbark program in 1974, the opening of Junior High — these are chapters of a story that every St Peters student deserves to know.</p>
               <p>A Heritage Trail creates a physical, permanent home for these stories. It ensures they are not lost when memories fade, and that the richness of St Peters' past remains visible and accessible to every person who walks through the school's gates.</p>
+            </div>
+          </section>
+
+          <section class="submit-cta">
+            <div class="container-narrow">
+              <div class="eyebrow">Share Your Story</div>
+              <h2>Contribute to the <span class="italic">Trail</span></h2>
+              <p>Do you know a person, place, program, or moment that belongs on the Heritage Trail? We are collecting submissions from students, staff, Old Scholars, parents, and the wider community. Every submission is reviewed by the Heritage Trail Committee.</p>
+              <a class="hero-cta" data-route="/submit">Make a Submission <span>→</span></a>
             </div>
           </section>
 
@@ -1362,6 +1588,306 @@
           colorDark: '#8B1F3C', colorLight: '#ffffff',
           correctLevel: QRCode.CorrectLevel.H
         });
+      });
+    }
+
+    function renderSubmit() {
+      document.getElementById('topNav').classList.remove('hidden');
+      app.innerHTML = `
+        <div class="view">
+          <section class="submit-hero">
+            <div class="container-narrow">
+              <div class="eyebrow">Heritage Trail Submissions</div>
+              <h1>Share a <span class="italic">Story</span> with the Trail</h1>
+              <p class="submit-lead">The Heritage Trail belongs to everyone who has been part of the St Peters community. If you know a person, place, program, or moment that deserves to be remembered, we'd love to hear about it. Submissions are reviewed by the Heritage Trail Committee and may be included in the trail or in the wider archive.</p>
+              <p class="submit-meta-note">Allow 15–20 minutes to complete this form. Sections marked <span class="req">*</span> are required.</p>
+            </div>
+          </section>
+
+          <section class="submit-form-section">
+            <div class="container-narrow">
+              <form id="submitForm" class="submit-form" novalidate>
+
+                <fieldset class="form-section">
+                  <legend><span class="form-section-num">A</span> About You</legend>
+                  <p class="form-section-intro">Your contact details are kept strictly confidential and never published.</p>
+
+                  <div class="form-row">
+                    <label for="f-name">Full Name <span class="req">*</span></label>
+                    <input id="f-name" name="name" type="text" required autocomplete="name">
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-email">Email Address <span class="req">*</span></label>
+                    <input id="f-email" name="email" type="email" required autocomplete="email">
+                    <p class="form-hint">A confirmation of receipt will be sent here.</p>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-phone">Phone Number</label>
+                    <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+                    <p class="form-hint">Optional · for follow-up only.</p>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-connection">Connection to St Peters <span class="req">*</span></label>
+                    <select id="f-connection" name="connection" required>
+                      <option value="">— Please select —</option>
+                      <option>Current Student</option>
+                      <option>Past Student (Old Scholar)</option>
+                      <option>Current Staff</option>
+                      <option>Past Staff</option>
+                      <option>Parent</option>
+                      <option>Community Member</option>
+                    </select>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-years">Year(s) at St Peters</label>
+                    <input id="f-years" name="years" type="text" placeholder="e.g. 1998–2004 or current">
+                  </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                  <legend><span class="form-section-num">B</span> Your Submission</legend>
+
+                  <div class="form-row">
+                    <label for="f-title">Submission Title <span class="req">*</span></label>
+                    <input id="f-title" name="title" type="text" maxlength="80" required>
+                    <p class="form-hint">A brief working title for the item · max 80 characters.</p>
+                  </div>
+
+                  <div class="form-row">
+                    <fieldset class="checkbox-group">
+                      <legend class="cg-legend">Category <span class="req">*</span></legend>
+                      <label class="cb"><input type="checkbox" name="category" value="Notable Person"> <span>Notable Person</span></label>
+                      <label class="cb"><input type="checkbox" name="category" value="Historic Building or Place"> <span>Historic Building or Place</span></label>
+                      <label class="cb"><input type="checkbox" name="category" value="School Program or Tradition"> <span>School Program or Tradition (e.g. Ironbark, Boarding)</span></label>
+                      <label class="cb"><input type="checkbox" name="category" value="Sporting Achievement"> <span>Sporting Achievement</span></label>
+                      <label class="cb"><input type="checkbox" name="category" value="Cultural or Arts Achievement"> <span>Cultural or Arts Achievement</span></label>
+                      <label class="cb"><input type="checkbox" name="category" value="Faith & Community"> <span>Faith &amp; Community</span></label>
+                      <label class="cb"><input type="checkbox" name="category" value="Other"> <span>Other</span></label>
+                    </fieldset>
+                    <p class="form-hint">Tick all that apply.</p>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-period">Approximate Time Period</label>
+                    <select id="f-period" name="period">
+                      <option value="">— Please select —</option>
+                      <option>Pre-1960</option>
+                      <option>1960s</option>
+                      <option>1970s</option>
+                      <option>1980s</option>
+                      <option>1990s</option>
+                      <option>2000s</option>
+                      <option>2010s</option>
+                      <option>2020s–Present</option>
+                      <option>Unknown</option>
+                    </select>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-story">Your Submission <span class="req">*</span></label>
+                    <textarea id="f-story" name="story" rows="10" required minlength="200" data-min-words="500" data-max-words="1000"></textarea>
+                    <p class="form-hint">Tell the story in your own words. What happened? Who was involved? Why does it matter to St Peters? <span class="word-count" data-for="f-story">0 words</span> · target 500–1000 words.</p>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-people">People Involved (if known)</label>
+                    <input id="f-people" name="people" type="text">
+                    <p class="form-hint">Names of students, staff or community members featured (with their permission where possible).</p>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-ethos">How does this reflect the St Peters ethos? <span class="req">*</span></label>
+                    <textarea id="f-ethos" name="ethos" rows="5" required data-max-words="300"></textarea>
+                    <p class="form-hint">Explain how this connects to the school's Christian values, academic excellence, community spirit or Lutheran traditions. <span class="word-count" data-for="f-ethos">0 words</span> · max 300 words.</p>
+                  </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                  <legend><span class="form-section-num">C</span> Supporting Materials</legend>
+                  <p class="form-section-intro">Optional · all uploads are reviewed before publication.</p>
+
+                  <div class="form-row">
+                    <label for="f-images">Photo(s) or Image(s)</label>
+                    <input id="f-images" name="images" type="file" accept="image/jpeg,image/png,application/pdf" multiple>
+                    <p class="form-hint">JPG, PNG, or PDF · max 3 files, 10MB each.</p>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-docs">Documents or Records</label>
+                    <input id="f-docs" name="docs" type="file" accept="application/pdf,.doc,.docx" multiple>
+                    <p class="form-hint">PDF or DOC · e.g. newspaper clippings, programmes, College magazines.</p>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-captions">Image / Document Captions</label>
+                    <textarea id="f-captions" name="captions" rows="3" placeholder="One caption per line, in the order files are uploaded."></textarea>
+                    <p class="form-hint">A brief description of each uploaded file.</p>
+                  </div>
+
+                  <div class="form-row">
+                    <label class="cb cb-block"><input type="checkbox" name="rightsConfirm" required> <span>I confirm I have the right to submit these materials and give St Peters permission to use them for the Heritage Trail. <span class="req">*</span></span></label>
+                  </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                  <legend><span class="form-section-num">D</span> Suggested Placement <span class="legend-opt">(optional)</span></legend>
+
+                  <div class="form-row">
+                    <label for="f-location">Suggested Location on Campus</label>
+                    <select id="f-location" name="location">
+                      <option value="">— Please select —</option>
+                      <option>Senior School</option>
+                      <option>Junior High</option>
+                      <option>Primary School</option>
+                      <option>Chapel</option>
+                      <option>Sports Precinct</option>
+                      <option>Boarding</option>
+                      <option>Ross Roy House</option>
+                      <option>Oval / Grounds</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-placement-notes">Any other placement notes?</label>
+                    <textarea id="f-placement-notes" name="placementNotes" rows="3" data-max-words="200" placeholder="e.g. near the original tuck shop, close to the Year 12 common room"></textarea>
+                    <p class="form-hint"><span class="word-count" data-for="f-placement-notes">0 words</span> · max 200 words.</p>
+                  </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                  <legend><span class="form-section-num">E</span> Consent &amp; Privacy</legend>
+
+                  <div class="form-row">
+                    <label class="cb cb-block"><input type="checkbox" name="privacyAck" required> <span>I have read the <a href="#" onclick="event.preventDefault();alert('Privacy Notice — to be linked to the school\\'s formal privacy statement when the form is wired up.');">Privacy Notice</a> and consent to my submission being reviewed by the Heritage Trail Committee. <span class="req">*</span></span></label>
+                  </div>
+
+                  <div class="form-row">
+                    <fieldset class="radio-group">
+                      <legend class="cg-legend">Public Attribution <span class="req">*</span></legend>
+                      <label class="rb"><input type="radio" name="attribution" value="Named" required> <span>Name my submission publicly</span></label>
+                      <label class="rb"><input type="radio" name="attribution" value="Anonymous"> <span>Attribute as 'Anonymous'</span></label>
+                      <label class="rb"><input type="radio" name="attribution" value="Contact me"> <span>I am unsure — please contact me</span></label>
+                    </fieldset>
+                  </div>
+
+                  <div class="form-row">
+                    <label class="cb cb-block"><input type="checkbox" name="votingOk" required> <span>I am comfortable with this submission entering a community voting process. <span class="req">*</span></span></label>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="f-source">How did you hear about the Heritage Trail?</label>
+                    <select id="f-source" name="source">
+                      <option value="">— Please select —</option>
+                      <option>School Newsletter</option>
+                      <option>Social Media</option>
+                      <option>Word of Mouth</option>
+                      <option>Staff</option>
+                      <option>Email</option>
+                      <option>Old Scholars' Association</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </fieldset>
+
+                <div class="form-actions">
+                  <button type="button" class="btn-ghost" id="saveDraftBtn">Save &amp; Continue Later</button>
+                  <button type="submit" class="btn-primary">Submit to the Heritage Trail Committee</button>
+                </div>
+
+                <p class="form-foot">
+                  Questions? Email <a href="mailto:heritagetrail@stpeters.qld.edu.au">heritagetrail@stpeters.qld.edu.au</a>.
+                </p>
+                <p class="form-mockup-note">
+                  <strong>Mock-up note:</strong> This form is a visual prototype. Submission handling, file uploads, draft-saving, and confirmation emails will be wired in once the school's preferred form platform is selected.
+                </p>
+              </form>
+              <div id="submitSuccess" class="submit-success" hidden>
+                <div class="check">✓</div>
+                <h2>Thank you</h2>
+                <p>Your submission has been received. The Heritage Trail Committee will review it and you'll receive a confirmation by email shortly. We may be in touch if we need any further detail.</p>
+                <a class="hero-cta" data-route="/">← Back to the Trail</a>
+              </div>
+            </div>
+          </section>
+
+          ${footerHtml()}
+        </div>
+      `;
+      initSubmitForm();
+    }
+
+    function initSubmitForm() {
+      const form = document.getElementById('submitForm');
+      if (!form) return;
+
+      // Live word counts
+      function countWords(s) { return s.trim() ? s.trim().split(/\s+/).length : 0; }
+      document.querySelectorAll('.word-count').forEach(el => {
+        const targetId = el.getAttribute('data-for');
+        const ta = document.getElementById(targetId);
+        if (!ta) return;
+        const update = () => { el.textContent = countWords(ta.value) + ' words'; };
+        ta.addEventListener('input', update);
+        update();
+      });
+
+      // Save draft (localStorage not available in artifacts but fine on a real site)
+      document.getElementById('saveDraftBtn').addEventListener('click', () => {
+        try {
+          const data = {};
+          new FormData(form).forEach((v, k) => { data[k] = v; });
+          localStorage.setItem('heritageTrailDraft', JSON.stringify(data));
+          alert('Draft saved on this device. Your progress will be restored next time you open this form.');
+        } catch (e) {
+          alert('Draft save is not available in this preview, but will work on the live form.');
+        }
+      });
+
+      // Restore draft if present
+      try {
+        const raw = localStorage.getItem('heritageTrailDraft');
+        if (raw) {
+          const data = JSON.parse(raw);
+          for (const [k, v] of Object.entries(data)) {
+            const el = form.elements[k];
+            if (!el) continue;
+            if (el.type === 'checkbox' || el.type === 'radio') continue;
+            if (el.type !== 'file') el.value = v;
+          }
+          document.querySelectorAll('.word-count').forEach(el => {
+            const ta = document.getElementById(el.getAttribute('data-for'));
+            if (ta) el.textContent = countWords(ta.value) + ' words';
+          });
+        }
+      } catch (e) {}
+
+      // Submit handling
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Custom validation: at least one Category checkbox
+        const cats = form.querySelectorAll('input[name="category"]:checked');
+        if (cats.length === 0) {
+          alert('Please select at least one Category in Section B.');
+          return;
+        }
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        // Mockup: just show the success panel
+        form.hidden = true;
+        const success = document.getElementById('submitSuccess');
+        success.hidden = false;
+        try { localStorage.removeItem('heritageTrailDraft'); } catch (e) {}
+        window.scrollTo({ top: success.offsetTop - 80, behavior: 'smooth' });
       });
     }
   </script>
