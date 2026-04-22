@@ -392,6 +392,30 @@
     font-size: 9.5px; letter-spacing: 0.3em; text-transform: uppercase;
     color: rgba(255,255,255,0.6); font-weight: 500; z-index: 2; white-space: nowrap;
   }
+  .detail-hero-photo {
+    background: var(--ink); height: clamp(280px, 52vh, 520px); padding: 0;
+    display: block; overflow: hidden;
+  }
+  .detail-hero-photo::before, .detail-hero-photo::after { display: none; }
+  .detail-hero-photo img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+    display: block;
+  }
+  .detail-hero-num-float {
+    position: absolute; top: 14px; left: clamp(16px, 3vw, 40px);
+    font-size: clamp(80px, 14vw, 160px);
+    color: rgba(255,255,255,0.85);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    z-index: 2; pointer-events: none;
+  }
+  .detail-hero-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 18px clamp(16px, 3vw, 40px);
+    background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    color: rgba(255,255,255,0.92); font-size: 13px; z-index: 2;
+    font-family: var(--serif); font-style: italic;
+  }
+  .detail-hero-caption em { font-style: italic; }
   .detail-content { padding: clamp(44px, 6vw, 68px) 0 clamp(32px, 4vw, 48px); }
   .detail-eyebrow { margin-bottom: 22px; }
   .detail-content h1 {
@@ -428,7 +452,7 @@
   }
   .gallery h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(22px, 3vw, 28px); color: var(--ink); margin-bottom: 4px; }
   .gallery .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; font-style: italic; }
-  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
   .photo-ph {
     aspect-ratio: 4/3; background: var(--white);
     border: 1px dashed var(--border-strong);
@@ -439,6 +463,30 @@
   .photo-ph:hover { border-color: var(--maroon); background: var(--maroon-faint); color: var(--maroon); }
   .photo-ph-icon { width: 28px; height: 28px; opacity: 0.6; }
   .photo-ph-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600; }
+  .gallery-grid .photo {
+    margin: 0; background: var(--white);
+    border: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .gallery-grid .photo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
+  .gallery-grid .photo img {
+    width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+    background: var(--cream-deep);
+  }
+  .gallery-grid .photo figcaption {
+    padding: 10px 14px 14px; font-size: 12.5px; color: var(--text-muted);
+    font-family: var(--serif); font-style: italic; line-height: 1.5;
+  }
+  .gallery-grid .photo figcaption .credit {
+    display: block; margin-top: 4px;
+    font-family: var(--sans); font-style: normal;
+    font-size: 10.5px; letter-spacing: 0.06em;
+    color: var(--text-subtle);
+  }
   .video-ph {
     margin-top: 20px; aspect-ratio: 16/9; background: var(--ink);
     display: flex; align-items: center; justify-content: center;
@@ -836,6 +884,9 @@
           details: [
             "Our tour starts at Ross Roy, where St Peters began. The home was built in 1897 and received its name from its second owner Ross Munro, and his son Roy.",
             "The building, at present, is used for Foundation and SPOSA administration purposes, and remains at the centre of College life. It is a focus for Old Scholars returning to the College."
+          ],
+          images: [
+            { src: "img/ross-roy-1922.jpg", caption: "Ross Roy from the gravel driveway, 1922", credit: "State Library of Queensland" }
           ]
         },
         {
@@ -849,7 +900,13 @@
           excerpt: "From the front steps, turning right, we arrive at Mrs Lohe's Memorial Rose Garden — a tribute to a very gracious lady affectionately remembered by many Old Scholars.",
           details: [
             "From the front steps, turning right, we arrive at Mrs Lohe's Memorial Rose Garden. The garden, dedicated in 2001, is a tribute to a very gracious lady affectionately remembered by many Old Scholars.",
-            "Mrs Lohe came to St Peters in 1945 following her marriage to foundation staff member Mr H W A (Bill) Lohe, Headmaster from 1956 to 1970."
+            "Mrs Lohe came to St Peters in 1945 following her marriage to foundation staff member Mr H W A (Bill) Lohe, Headmaster from 1956 to 1970.",
+            "Founding teacher of music, Mrs Dulcie Lohe (1 April 1914 – 9 February 1999) was honoured by SPOSA who initiated the rose garden on the northern side of Ross Roy 'to remember how Mrs Lohe enriched the school and this world with a life of service'. The garden was dedicated by Pastor Reini Mayer."
+          ],
+          images: [
+            { src: "img/people/dulcie-lohe-rose-garden-2011.jpg", caption: "The Rose Garden, 2011", credit: "Photographer unknown" },
+            { src: "img/people/dulcie-lohe.jpg", caption: "Dulcie Lohe", credit: "Photographer unknown" },
+            { src: "img/people/dulcie-lohe-rose-garden-dedication.jpg", caption: "Dedication of the Rose Garden", credit: "Photographer unknown" }
           ]
         },
         {
@@ -877,7 +934,11 @@
           excerpt: "Behind the Girls Dorms is Finger House, a multi-level boarding complex named after long-serving Girls' Governess, Erica Finger.",
           details: [
             "Behind the Girls Dorms is Finger House (1972), a multi-level boarding complex named after long-serving Girls' Governess, Erica Finger.",
+            "Erica (Mütze) Finger was Governess-House Mistress from 1946 to 1972, when she left to marry Karl Mütze, son of Fred Mütze of the 'Three Freds'.",
             "For boarder girls there was always the rush before the cry 'Lights out!', the anticipation of midnight feasts, fear of being 'sprung' for all sorts of misdeeds…"
+          ],
+          images: [
+            { src: "img/people/erica-finger.jpg", caption: "Erica Finger, Girls' Governess 1946–1972", credit: "Photographer unknown" }
           ]
         },
         {
@@ -904,7 +965,11 @@
           excerpt: "An elegant home on the corner of nearby Kew and Hunter Streets which functioned as a hostel for boarder girls and female staff for the College's first three years.",
           details: [
             "'Walella' was an elegant home on the corner of nearby Kew and Hunter Streets which functioned as a hostel for boarder girls and female staff for the College's first three years.",
+            "The Review (1946) describes it as a 'ten-roomed building with two big verandas' about 'seven minutes' walk from St Peters', and recalls 'Life at the Hostel' as a 'happy time' for thirty girls.",
             "It has been restored and is again functioning as a private home."
+          ],
+          images: [
+            { src: "img/people/walella-1946-drawing.jpg", caption: "The Girls' Hostel 'Walella' — drawing by G. Voll", credit: "The Review, 1946" }
           ]
         },
         {
@@ -946,7 +1011,12 @@
           excerpt: "Heading up to the main campus, on the left we pass Lohe House — a classroom block named in honour of the College's second Headmaster, Mr Bill Lohe.",
           details: [
             "Continuing along College Road we head up to the main campus where on the left hand side we pass Lohe House (1973).",
-            "Located on what was originally a tennis court and then the girls' lawn basketball courts nestled among high hedges, this classroom block of eight general classrooms, staff room and music centre area was named in honour of the College's second Headmaster, Mr Bill Lohe."
+            "Located on what was originally a tennis court and then the girls' lawn basketball courts nestled among high hedges, this classroom block of eight general classrooms, staff room and music centre area was named in honour of the College's second Headmaster, Mr Bill Lohe.",
+            "A formidable teacher of German and History, Mr Lohe was also devoted to College sport and The Arts and wrote the school song, sung at the opening of Theile House in 1959. The Lohe family descends from Pastor Wilhelm Löhe, founder of the Bavarian Mission Society in Neuendettelsau."
+          ],
+          images: [
+            { src: "img/people/lohe-house.jpg", caption: "Lohe House", credit: "Photographer unknown" },
+            { src: "img/people/bill-lohe-portrait.jpg", caption: "H. W. A. (Bill) Lohe", credit: "Photographer unknown" }
           ]
         },
         {
@@ -960,8 +1030,15 @@
           excerpt: "Adjacent to Lohe House is the Library — state-of-the-art for its time, designed by Eric Parups and named after Dr Karl Langer.",
           details: [
             "Adjacent to Lohe House is the Library (1972). The building, state-of-the-art for its time, was seen as a teaching and learning centre, with an audio-visual room, individual study carrels and lecture rooms.",
+            "Dedicated by Pastor F H Schmidt, President of the Lutheran Church, and opened by Mr K Cairns, Minister for Housing, in 1972. At the opening, Dr Carson Dron drew attention to the fact that the Chapel and the Library face each other across the quadrangle — each a symbol of learning, each complementing the other.",
             "The Library, designed by Eric Parups, is named after Dr Karl Langer, the College's first architect, who died in 1970.",
-            "The recently installed stained glass window to the right of the main entrance is a memorial to W C Schneider, Headmaster, planned by his wife. We'd love ideas for a matching window on the opposite side — any suggestions?"
+            "The stained glass window to the right of the main entrance is a memorial to W C Schneider, Foundation Headmaster, commissioned and donated by his widow Mrs Phyllis Schneider. We'd love ideas for a matching window on the opposite side — any suggestions?"
+          ],
+          images: [
+            { src: "img/people/langer-library.jpg", caption: "The Karl Langer Memorial Library", credit: "The Review, 1972" },
+            { src: "img/people/langer-library-opening-1972.jpg", caption: "Opening of Langer Library, 1972", credit: "Photographer unknown" },
+            { src: "img/people/langer-library-students.jpg", caption: "Students working inside Langer Library", credit: "Photographer unknown" },
+            { src: "img/people/schneider-stained-glass.jpg", caption: "W. C. Schneider memorial stained-glass window at the library entrance", credit: "Donated by Mrs Phyllis Schneider, 2004" }
           ]
         },
         {
@@ -975,7 +1052,14 @@
           excerpt: "Schneider commemorates a 'first' — a tangible reminder of the College's first Headmaster Wilfred Schneider ('Bossy'), who remained on staff until his death at 80.",
           details: [
             "To the right of the Library are Schneider (1983) and Dohler (1994) classroom blocks.",
-            "Schneider commemorates another 'first' – a tangible reminder of the College's first Headmaster Wilfred Schneider ('Bossy') who remained on the College staff until his death at the age of 80 years. Science and computer studies are held here."
+            "Schneider commemorates another 'first' – a tangible reminder of the College's foundation Headmaster Wilfred Schneider MA, DipEd (London) ('Bossy') (11 April 1906 – 13 May 1986) who remained on the College staff until his death at the age of 80 years. Science and computer studies are held here.",
+            "After 10 years of dedication to the growing school, Mr Schneider took Long Service Leave; instead of returning to St Peters he spent a year as Headmaster of newly sited Immanuel College in North Adelaide before returning to St Peters as a teacher of Maths and Latin in 1958, where he remained until he passed away."
+          ],
+          images: [
+            { src: "img/people/wc-schneider-portrait.jpg", caption: "W. C. Schneider, Foundation Headmaster", credit: "Photographer unknown" },
+            { src: "img/people/schneider-building-1982.jpg", caption: "Schneider Building completed 1982", credit: "Photographer unknown" },
+            { src: "img/people/schneider-house.jpg", caption: "Schneider precinct", credit: "Photographer unknown" },
+            { src: "img/people/schneider-plaque.jpg", caption: "Memorial plaque dedicated 20 February 2004", credit: "Photographer unknown" }
           ]
         },
         {
@@ -988,8 +1072,12 @@
           coords: [-27.505177, 152.985237],
           excerpt: "Dohler is named after Pastor Gerhard Dohler, Chairman of the original Committee of Direction responsible for founding St Peters.",
           details: [
-            "Dohler is named after Pastor Gerhard Dohler, Chairman of the original Committee of Direction, responsible for the founding of St Peters.",
-            "The building is home to mostly Senior classes."
+            "Dohler is named after Pastor Gerhard Dohler, Chairman of the original Committee of Direction responsible for the founding of St Peters Lutheran College.",
+            "Pastor Dohler was a member of the College Board of Management (1945–1970) and for many years its Chairman, while serving parishes at Ipswich and the Gold Coast. He devoted countless hours and days to the work of St Peters, leaving an indelible mark on the school which was dear to his heart. In 1954 he dedicated the new boys' dormitory building.",
+            "The building is home to mostly Senior classes. Dohler Building was officially opened by his daughter Miss Esther Dohler and dedicated by Pastor Ray Eisenmenger, St Peters' Senior Chaplain."
+          ],
+          images: [
+            { src: "img/people/pastor-dohler.jpg", caption: "Pastor Gerhard Dohler", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1018,7 +1106,12 @@
           details: [
             "Overlooking the quadrangle and the focal point of the College, both physically and spiritually, is the Chapel, built in 1968.",
             "A number of surplus World War Two Army huts saw service in the early years of the College in multiple roles — as chapel, dining hall, gym, and later, drama rooms. The upper storey of Luther House was also used as a chapel.",
-            "After twenty-five years, Dr Karl Langer designed the Chapel, which was dedicated for service to the College."
+            "After twenty-five years, Dr Karl Langer designed the Chapel, which was dedicated for service to the College. Karl Langer is reported to have said that, of all his designs, St Peters Chapel is the one of which he is most proud.",
+            "The Chapel was opened by the chairman of the College Council in the presence of the builder, Mr W. W. Groom, and the architect, Dr K. Langer; the service was conducted by the school's Pastor Mayer and the President General of the Lutheran Church of Australia, Dr M. Lohe. An estimated two thousand people attended the dedication."
+          ],
+          images: [
+            { src: "img/people/chapel-opening-1968.jpg", caption: "Official opening service of the St Peters Lutheran College Chapel", credit: "Photo by Theo Helbig, 1968" },
+            { src: "img/people/chapel-dedication-service.jpg", caption: "The Chapel dedication service", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1046,7 +1139,16 @@
           excerpt: "The first permanent Boys Dormitory was drawn up into a formal 'House' structure in 1983 — Ludcke, Mutze and Schilling — honouring the three 'Freds'.",
           details: [
             "The boys dorms were drawn up into a formal 'House' structure in 1983 with Ludcke, Mutze and Schilling honouring the three 'Freds' on the first Committee of Management: Fred Ludcke, Fred Mutze and Fred Schilling.",
+            "Fred Ludke and Fred Schilling were two of the trustees who signed the contract to buy the property for St Peters; Fred Mütze was a member of the feasibility committee charged with founding a Lutheran Church school in Queensland. A tribute records that 'Among the many men who devoted many hours of manual and mental effort to the establishment of St Peters, an unforgettable trio were the three Freds — Fred Ludke and Fred Mutze were carpenters, benefactors and Committeemen, who contributed their skills, money and intellect to building St Peters'.",
+            "Pastor Dohler appealed for funding for the boys' dormitory and the original brick dorm was dedicated by him in 1954. The memorial stone was donated by Karl Langer. Schilling House was later dedicated in October 1989 by Pastor Paul Renner.",
             "'Buck Palace' and 'Windsor Castle', two of the dorms, are still popular residences for boarder boys."
+          ],
+          images: [
+            { src: "img/people/three-freds.jpg", caption: "The 'Three Freds'", credit: "Photographer unknown" },
+            { src: "img/people/first-boys-dormitory.jpg", caption: "First Boys' Dormitory", credit: "Photographer unknown" },
+            { src: "img/people/boys-new-dormitories-1955.jpg", caption: "Boys' new dormitories, complete with memorial stone donated by Karl Langer, 1955", credit: "Photographer unknown" },
+            { src: "img/people/schilling-house.jpg", caption: "Schilling House on completion", credit: "Photographer unknown" },
+            { src: "img/people/schilling-opening-1989.jpg", caption: "Opening of Schilling by Hon Brian Littleproud, Minister for Education, 29 October 1989", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1073,8 +1175,12 @@
           coords: [-27.505477, 152.985637],
           excerpt: "Originally known simply as the Main Oval, it was formally named in 2002 to mark the commitment to sport by Old Scholar Pastor Reinhard Mayer.",
           details: [
-            "Originally simply known as the Main Oval, it was formally named in 2002 to mark the commitment to sport by Old Scholar Pastor Reinhard Mayer.",
-            "A member of the College First XV in 1949 and 1950, Pastor Mayer was also the longest-serving Chaplain with twenty-five years of service."
+            "Originally simply known as the Main Oval, it was formally named in 2002 to mark the commitment to sport by Old Scholar Pastor Reinhard ('Reini') Mayer.",
+            "A member of the College First XV in 1949 and 1950, Pastor Mayer was also the longest-serving Chaplain with twenty-five years of service. His devotion to St Peters and to Rugby was legendary."
+          ],
+          images: [
+            { src: "img/people/reini-mayer.jpg", caption: "Pastor Reinhard ('Reini') Mayer", credit: "Photographer unknown" },
+            { src: "img/people/mayer-oval-late-1960s.jpg", caption: "Mayer Oval, late 1960s", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1145,7 +1251,11 @@
           excerpt: "One of the first sporting facilities of the College, named after Pastor J G Stolz — Secretary and Chairman of the College Council for many years.",
           details: [
             "We now cross Stolz Oval (1947), one of the first sporting facilities of the College and named after Pastor J G Stolz, a Secretary and Chairman of the College Council for many years.",
+            "Pastor Stolz was passionate about providing a Christian education. In 1948 he warned that students' education 'lacked balance in that they knew nothing of spiritual values', believing that schools such as St Peters Lutheran College would encourage 'intellectual balance' and help to 'combat materialistic doctrines' (Courier-Mail, 13 September 1948).",
             "It was remodeled in the late 1970s and from 1980 has been used solely by the Junior School."
+          ],
+          images: [
+            { src: "img/people/stolz-oval.jpg", caption: "Stolz Oval", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1159,7 +1269,11 @@
           excerpt: "The Junior School, opened and dedicated in 1974, actually began the previous year with Grades One and Two located in temporary accommodation.",
           details: [
             "The Junior School, opened and dedicated in 1974, actually began the previous year with Grades One and Two located in temporary accommodation.",
-            "Major changes have taken place over the life of the Junior School, in particular the move to double-streaming the whole campus."
+            "Major changes have taken place over the life of the Junior School, in particular the move to double-streaming the whole campus.",
+            "In 2008 a refurbishment of the old stage two building created Belfield Hall — a spectacular hall that can accommodate the entire Junior School for assemblies and other functions. The hall honours past teacher Mrs Jo Belfield, who began her St Peters teaching career in 1993 with a Year One class and retired at the end of 2005 after thirteen years' service, particularly commended 'for her musical talents and contributions to Chapel planning over the years'."
+          ],
+          images: [
+            { src: "img/people/belfield-hall-2009.jpg", caption: "Belfield Hall, Junior School, 2009", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1188,7 +1302,10 @@
           details: [
             "A little further up the hill along Rainforest Way we come to the Rainforest, established in 1967. While not a concrete structure or classroom, it is a significant part of the heritage of the College — a constant reminder that the College is much more than simply bricks and mortar.",
             "Developed out of remnant scrubby grassland, it now provides a valuable natural resource for students; however student use in the past was not always strictly legitimate…",
-            "Formally named the Barry Jahnke Rainforest Reserve in 2002, it honours the environmental commitment of a long-serving staff member."
+            "Formally named the Barry Jahnke Rainforest Reserve in 2002, it honours the environmental commitment of long-serving staff member Mr Barry Jahnke, a Biology teacher for over 30 years who inspired his students with a greater appreciation of Queensland's natural history. In 2009 Mr Jahnke received the Queensland Natural History Award, and was an important member of the team who investigated the feasibility of the Ironbark project."
+          ],
+          images: [
+            { src: "img/people/barry-jahnke-rainforest-sign.jpg", caption: "Barry Jahnke Rainforest Reserve sign", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1201,7 +1318,11 @@
           coords: [-27.505177, 152.985937],
           excerpt: "One of the remaining Army huts still in use, colloquially known as 'Taj Mahal' — home to literally hundreds of girls over the life of the College.",
           details: [
-            "As we look right across Rainforest Way we see one of the remaining Army huts still in use and colloquially known as 'Taj Mahal' (Girls Dorms), home to literally hundreds of girls over the life of the College."
+            "As we look right across Rainforest Way we see one of the remaining Army huts still in use and colloquially known as 'Taj Mahal' (Girls Dorms), home to literally hundreds of girls over the life of the College.",
+            "The smallest dorm, and perhaps the most coveted, was acknowledged as a House in 1983."
+          ],
+          images: [
+            { src: "img/people/taj-mahal-1962.jpg", caption: "'Taj Mahal' as pictured in The Review, 1962", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1215,7 +1336,10 @@
           excerpt: "Named in honour of Old Scholar and member of the College Council 1980–1995, this multi-purpose building houses food technology and fashion courses among others.",
           details: [
             "Retracing our steps along Rainforest Way we arrive at the Herb Zillmann Technology Centre (1999).",
-            "Named in honour of Old Scholar and member of the College Council 1980–1995, this multi-purpose building houses food technology and fashion courses among others."
+            "Named in honour of Herb Zillmann (1939 – 2011) — Old Scholar, parent, and member of the College Council 1980–1995 and its Chair for many years — this multi-purpose building houses food technology and fashion courses among others. The centre caters for courses including Engineering Technology, Graphics, Technology Studies, Construction, Fashion and Hospitality."
+          ],
+          images: [
+            { src: "img/people/zillmann-technology-centre-1999.jpg", caption: "Zillmann Technology Centre, opened 1999", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1229,7 +1353,11 @@
           excerpt: "Another building designed by Eric Parups — allowing students to explore spinning, weaving, manual arts, drawing and sculpture.",
           details: [
             "Adjacent is the Visual Arts block (1979). Another building designed by Eric Parups, it allows students to explore such diverse areas as spinning, weaving, manual arts, drawing and sculpture.",
-            "It also houses a small theatre and exhibition area. For many years during Herbstfest this building was a hive of crafty fundraising activity. Enjoy the artworks of current students as we pass by."
+            "It also houses a small theatre and exhibition area. For many years during Herbstfest this building was a hive of crafty fundraising activity. Enjoy the artworks of current students as we pass by.",
+            "The extended and refurbished centre was dedicated as the Sally Chandler Visual Arts Centre on Founders Day 2011, in honour of former Head of College Mrs Sally Chandler. Joining staff in 1983 as Head of the Arts, Mrs Chandler was variously Senior Mistress in charge of girls' boarding, Head of Senior School and Deputy Head, before being appointed Head of College in 1995 — the first female head of a Lutheran secondary school."
+          ],
+          images: [
+            { src: "img/people/sally-chandler.jpg", caption: "Sally Chandler, Head of College (1994–2002)", credit: "Photographer unknown" }
           ]
         },
         {
@@ -1243,9 +1371,15 @@
           excerpt: "Originally dedicated in 1959 by Governor Sir Henry Abel Smith — named in honour of Rev Dr F Otto Theile, with long association to the Lutheran Church's missions.",
           details: [
             "From here we walk towards the Refectory and up the steps to Theile House. Theile House was originally dedicated on 20 June 1959 and officially opened by Governor Colonel Sir Henry Abel Smith.",
-            "The building was named in honour of Rev Dr F Otto Theile, who had a long association with the Lutheran Church of Australia's Aboriginal and PNG missions from 1920 – 1945.",
+            "The building was named in honour of Rev Dr Friedrich Otto Theile, Director of Missions for the UELCA 1920–1945. Born in South Australia in 1880, he was schooled at Immanuel College in Point Pass, SA, and from 1897 studied at the Mission Seminary in Neuendettelsau, Germany.",
+            "F. O. Theile was passionate about the need for Christian education. In his 1938 book One Hundred Years of the Lutheran Church in Queensland he argued that Lutheran day schools 'would use the English language, but religion would not only be a subject, religion and the Word of God would constitute the atmosphere in which every subject was taught'.",
             "For many years a classroom block, Theile House was rededicated in 2005 after being refurbished. While much of the southern exterior remains, the rest of Theile House has been internally and externally modernised. Some interesting student graffiti was exposed in the roof during the renovations — can anyone put a name to the artist(s)? Although the new roof is on, there is a visual record of the 'artwork' on file in the archives.",
             "New classrooms, staffrooms and a new Senior Study Centre, and lift access to the building, will see Theile House continue to serve the College for many years to come."
+          ],
+          images: [
+            { src: "img/people/theile-house.jpg", caption: "Theile House", credit: "Photographer unknown" },
+            { src: "img/people/theile-house-opening-1959.jpg", caption: "Governor Sir Henry Abel Smith and Mr W. Lohe at the opening of Theile House, 20 June 1959", credit: "Photographer unknown" },
+            { src: "img/people/theile-book-cover-1938.jpg", caption: "Theile's book, One Hundred Years of the Lutheran Church in Queensland (1938)", credit: "Trove" }
           ]
         },
         {
@@ -1259,8 +1393,15 @@
           excerpt: "Walking out of Theile House we turn right and arrive at the final point of our journey — Luther House, the College's first major classroom building.",
           details: [
             "Walking out of Theile House we turn right and arrive at the final point of our journey at Luther House, built in 1948 — the College's first major classroom building.",
+            "An obvious choice of name for the first major classroom block, Luther House honoured the father of the Protestant reformation, Martin Luther (1483–1546). A former Roman Catholic priest, Luther rejected their teachings — especially the notion one could buy one's way into heaven — and, among other things, translated the Bible from Latin into German so that all people had access to it.",
+            "Designed by Dr Karl Langer for coolness, classrooms were placed on the ground floor with a large auditorium on the top floor. Many of Dr Langer's ideas were incorporated — window louvres were featured extensively, and white paint was used to suit sub-tropical conditions. The result was that in summer the building was one of the coolest of its kind in Queensland.",
+            "Luther House was built in 1947/48 and dedicated by Pastor Max Lohe, President of the Queensland District United Evangelical Lutheran Church of Australia.",
             "The top floor has been used as a Chapel and also served as an auditorium where for many years concerts and musicals were held, while the ground floor housed classrooms, staffroom and a library.",
             "Today it serves primarily as an administration centre, and is as much at the heart of the College as it was almost sixty years ago."
+          ],
+          images: [
+            { src: "img/people/luther-house-1950.jpg", caption: "Luther House in 1950", credit: "Photo received from Wilma Marsh" },
+            { src: "img/people/luther-house-dedication-article.jpg", caption: "'Dedication of Luther House' — Queensland Times, 14 September 1948", credit: "National Library of Australia / Trove" }
           ]
         }
       ]
@@ -1470,6 +1611,45 @@
       const next = TRAIL.stops[idx + 1];
       const stopUrl = `${location.origin}${location.pathname}#/stop/${s.id}`;
       const paragraphs = s.details.map(p => `<p>${esc(p)}</p>`).join('');
+      const images = Array.isArray(s.images) ? s.images : [];
+      const heroImg = images[0];
+      const extraImgs = images.slice(1);
+
+      const heroHtml = heroImg
+        ? `
+          <div class="detail-hero detail-hero-photo">
+            <div class="detail-hero-num detail-hero-num-float">${s.number}</div>
+            <img src="${esc(heroImg.src)}" alt="${esc(heroImg.caption || s.title)}">
+            <div class="detail-hero-caption">
+              <em>${esc(heroImg.caption || '')}</em>${heroImg.credit ? ` · ${esc(heroImg.credit)}` : ''}
+            </div>
+          </div>`
+        : `
+          <div class="detail-hero">
+            <div class="detail-hero-num">${s.number}</div>
+            <div class="detail-hero-label">Historical photograph · Replace via SPOSA archive</div>
+          </div>`;
+
+      let galleryHtml = '';
+      if (extraImgs.length) {
+        galleryHtml = `
+          <section class="gallery">
+            <div class="container-narrow">
+              <h3>Gallery</h3>
+              <div class="sub">Historical photographs, artefacts and archival documents</div>
+              <div class="gallery-grid">
+                ${extraImgs.map(img => `
+                  <figure class="photo">
+                    <img src="${esc(img.src)}" alt="${esc(img.caption || '')}" loading="lazy">
+                    <figcaption>
+                      <em>${esc(img.caption || '')}</em>${img.credit ? `<span class="credit">${esc(img.credit)}</span>` : ''}
+                    </figcaption>
+                  </figure>
+                `).join('')}
+              </div>
+            </div>
+          </section>`;
+      }
 
       app.innerHTML = `
         <div class="view">
@@ -1478,10 +1658,7 @@
             <div class="detail-progress">Stop <strong>${idx + 1}</strong> / ${TRAIL.stops.length}</div>
           </div>
 
-          <div class="detail-hero">
-            <div class="detail-hero-num">${s.number}</div>
-            <div class="detail-hero-label">Historical photograph · Replace via SPOSA archive</div>
-          </div>
+          ${heroHtml}
 
           <article class="detail-content">
             <div class="container-narrow">
@@ -1497,28 +1674,7 @@
             </div>
           </article>
 
-          <section class="gallery">
-            <div class="container-narrow">
-              <h3>Gallery</h3>
-              <div class="sub">Historical photographs, artefacts, and archival documents</div>
-              <div class="gallery-grid">
-                ${[1,2,3,4].map(n => `
-                  <div class="photo-ph">
-                    <svg class="photo-ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                      <rect x="3" y="5" width="18" height="14" rx="1"/>
-                      <circle cx="12" cy="12" r="3.5"/>
-                      <path d="M8 5l2-2h4l2 2"/>
-                    </svg>
-                    <div class="photo-ph-label">Photo ${n}</div>
-                  </div>
-                `).join('')}
-              </div>
-              <div class="video-ph">
-                <div class="play-icon"></div>
-                <div class="video-ph-label">Video Placeholder · Embed YouTube or Vimeo</div>
-              </div>
-            </div>
-          </section>
+          ${galleryHtml}
 
           <section class="qr-block">
             <div class="container-narrow">
