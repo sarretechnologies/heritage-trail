@@ -840,6 +840,193 @@
     .form-actions { flex-direction: column-reverse; }
     .form-actions button { width: 100%; }
   }
+
+  /* ===== BOOKLET (printable PDF view) ===== */
+  body.booklet-mode { background: #efeae0; }
+  body.booklet-mode .mockup-banner { display: none; }
+  .booklet {
+    max-width: 820px;
+    margin: 32px auto;
+    padding: 0 16px;
+    color: var(--ink);
+  }
+  .bk-page {
+    background: #fff;
+    margin: 0 0 24px;
+    padding: 56px 64px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    border-radius: 2px;
+    page-break-after: always;
+    break-after: page;
+  }
+  .bk-page:last-child { page-break-after: auto; break-after: auto; }
+
+  /* Cover */
+  .bk-cover {
+    text-align: center;
+    padding: 80px 64px;
+    background: linear-gradient(180deg, #fff 0%, #f6efe2 100%);
+  }
+  .bk-cover-crest img { width: 110px; height: 110px; object-fit: contain; }
+  .bk-cover-eyebrow {
+    margin-top: 28px;
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--maroon); font-weight: 600;
+  }
+  .bk-cover-title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 64px; line-height: 1; margin: 18px 0 8px;
+    color: var(--ink);
+  }
+  .bk-cover-title em { font-style: italic; color: var(--maroon); }
+  .bk-cover-sub { font-size: 16px; color: var(--text); margin-bottom: 36px; }
+  .bk-cover-image { margin: 28px 0 36px; }
+  .bk-cover-image img { width: 100%; max-height: 360px; object-fit: cover; border-radius: 2px; }
+  .bk-cover-cap { font-size: 11px; color: var(--text-light); margin-top: 8px; }
+  .bk-cover-foot {
+    margin-top: 24px; font-size: 13px; color: var(--text);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* Section pages */
+  .bk-section-title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 36px; color: var(--ink);
+    margin: 0 0 24px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .bk-intro p, .bk-credits p {
+    font-size: 14px; line-height: 1.7; color: var(--text);
+    margin: 0 0 14px;
+  }
+  .bk-lead {
+    font-family: var(--serif); font-style: italic;
+    font-size: 18px !important; line-height: 1.6 !important;
+    color: var(--ink) !important;
+    margin-bottom: 22px !important;
+  }
+  .bk-credits-foot {
+    margin-top: 36px; padding-top: 18px;
+    border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--text-light); text-align: center;
+  }
+
+  /* Table of contents */
+  .bk-toc-list {
+    list-style: none; padding: 0; margin: 0;
+    columns: 2; column-gap: 32px;
+  }
+  .bk-toc-list li {
+    display: grid; grid-template-columns: 28px 1fr auto;
+    gap: 10px; align-items: baseline;
+    padding: 8px 0; border-bottom: 1px dotted var(--border);
+    break-inside: avoid;
+  }
+  .toc-num {
+    font-family: var(--serif); font-style: italic;
+    color: var(--maroon); font-size: 16px;
+  }
+  .toc-title { font-size: 13px; color: var(--ink); }
+  .toc-era { font-size: 10px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Stop pages */
+  .bk-stop-head {
+    display: grid; grid-template-columns: 64px 1fr;
+    gap: 20px; align-items: start;
+    margin-bottom: 22px; padding-bottom: 18px;
+    border-bottom: 2px solid var(--maroon);
+  }
+  .bk-stop-num {
+    font-family: var(--serif); font-style: italic;
+    color: var(--maroon); font-size: 56px; line-height: 1;
+  }
+  .bk-eyebrow {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-light); font-weight: 600; margin-bottom: 4px;
+  }
+  .bk-stop-title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 30px; line-height: 1.15; color: var(--ink);
+    margin: 0 0 4px;
+  }
+  .bk-stop-sub { font-size: 13px; color: var(--text); font-style: italic; }
+  .bk-stop-meta {
+    margin-top: 8px; font-size: 11px; color: var(--text-light);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .bk-stop-meta span + span::before { content: '·'; margin: 0 8px; }
+
+  .bk-hero { margin: 0 0 18px; }
+  .bk-hero img {
+    width: 100%; max-height: 320px;
+    object-fit: cover; border-radius: 2px;
+  }
+  .bk-hero figcaption {
+    font-size: 11px; color: var(--text-light);
+    margin-top: 6px; text-align: center;
+  }
+
+  .bk-body p {
+    font-size: 12.5px; line-height: 1.7; color: var(--ink);
+    margin: 0 0 10px;
+  }
+
+  .bk-gallery {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; margin-top: 18px;
+  }
+  .bk-gallery figure { margin: 0; break-inside: avoid; }
+  .bk-gallery img {
+    width: 100%; height: 160px; object-fit: cover; border-radius: 2px;
+  }
+  .bk-gallery figcaption {
+    font-size: 10px; color: var(--text-light); margin-top: 4px; line-height: 1.4;
+  }
+
+  .bk-page-foot {
+    margin-top: 24px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 10px; color: var(--text-light);
+    text-transform: uppercase; letter-spacing: 1.5px; text-align: center;
+  }
+
+  /* The booklet "Download" CTA on the home page */
+  .booklet-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 22px; margin-top: 18px;
+    background: #fff; color: var(--maroon);
+    border: 1.5px solid var(--maroon);
+    border-radius: 2px;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.18s, color 0.18s;
+  }
+  .booklet-cta:hover { background: var(--maroon); color: #fff; }
+
+  /* ===== PRINT STYLES (Playwright captures these) ===== */
+  @media print {
+    @page { size: A4; margin: 14mm 14mm 16mm 14mm; }
+    body, body.booklet-mode { background: #fff !important; }
+    .mockup-banner, .nav, .footer { display: none !important; }
+    .booklet { max-width: none; margin: 0; padding: 0; }
+    .bk-page {
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border-radius: 0;
+    }
+    .bk-cover { padding: 0 !important; min-height: 90vh; }
+    .bk-cover-image img { max-height: 380px; }
+    .bk-hero img { max-height: 280px; }
+    .bk-gallery img { height: 140px; }
+    .bk-page-foot { display: none; } /* page numbers come from Playwright header/footer */
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100% !important; }
+    /* Avoid splitting awkward elements */
+    .bk-stop-head, .bk-hero, .bk-gallery figure, .bk-credits-foot { break-inside: avoid; }
+    h1, h2, h3 { break-after: avoid; }
+  }
 </style>
 </head>
 <body>
@@ -1414,6 +1601,7 @@
       if (h === '/' || h === '') return { name: 'home' };
       if (h === '/qr-codes') return { name: 'qr' };
       if (h === '/submit') return { name: 'submit' };
+      if (h === '/booklet') return { name: 'booklet' };
       const m = h.match(/^\/stop\/(\d+)$/);
       if (m) {
         const id = parseInt(m[1], 10);
@@ -1435,6 +1623,7 @@
       else if (r.name === 'stop') renderStop(r.id);
       else if (r.name === 'qr') renderQR();
       else if (r.name === 'submit') renderSubmit();
+      else if (r.name === 'booklet') renderBooklet();
       window.scrollTo(0, 0);
     }
 
@@ -1508,6 +1697,7 @@
               </div>
               <p class="hero-lead">${esc(TRAIL.intro)}</p>
               <a class="hero-cta" href="#trail-map">Begin the Journey <span>→</span></a>
+              <a class="booklet-cta" href="booklet.pdf" download>Download Booklet (PDF)</a>
             </div>
           </section>
 
@@ -1958,6 +2148,105 @@
         </div>
       `;
       initSubmitForm();
+    }
+
+    function renderBooklet() {
+      document.getElementById('topNav').classList.add('hidden');
+      document.body.classList.add('booklet-mode');
+
+      const stopPages = TRAIL.stops.map((s, idx) => {
+        const images = Array.isArray(s.images) ? s.images : [];
+        const heroImg = images[0];
+        const extraImgs = images.slice(1);
+        const paragraphs = s.details.map(p => `<p>${esc(p)}</p>`).join('');
+        const heroHtml = heroImg
+          ? `<figure class="bk-hero">
+               <img src="${esc(heroImg.src)}" alt="${esc(heroImg.caption || s.title)}">
+               <figcaption><em>${esc(heroImg.caption || '')}</em>${heroImg.credit ? ` · ${esc(heroImg.credit)}` : ''}</figcaption>
+             </figure>`
+          : '';
+        const galleryHtml = extraImgs.length
+          ? `<div class="bk-gallery">
+               ${extraImgs.map(img => `
+                 <figure>
+                   <img src="${esc(img.src)}" alt="${esc(img.caption || '')}">
+                   <figcaption><em>${esc(img.caption || '')}</em>${img.credit ? ` · ${esc(img.credit)}` : ''}</figcaption>
+                 </figure>
+               `).join('')}
+             </div>`
+          : '';
+        return `
+          <article class="bk-page bk-stop">
+            <header class="bk-stop-head">
+              <div class="bk-stop-num">${s.number}</div>
+              <div>
+                <div class="bk-eyebrow">Stop ${s.number} · ${esc(s.era)}</div>
+                <h2 class="bk-stop-title">${esc(s.title)}</h2>
+                <div class="bk-stop-sub">${esc(s.subtitle)}</div>
+                <div class="bk-stop-meta">
+                  <span>${esc(s.location)}</span>
+                  <span>${esc(s.readtime)}</span>
+                </div>
+              </div>
+            </header>
+            ${heroHtml}
+            <div class="bk-body">${paragraphs}</div>
+            ${galleryHtml}
+            <footer class="bk-page-foot">The Heritage Trail · Stop ${s.number} of ${TRAIL.stops.length}</footer>
+          </article>
+        `;
+      }).join('');
+
+      const tocHtml = TRAIL.stops.map(s => `
+        <li>
+          <span class="toc-num">${s.number}</span>
+          <span class="toc-title">${esc(s.title)}</span>
+          <span class="toc-era">${esc(s.era)}</span>
+        </li>
+      `).join('');
+
+      app.innerHTML = `
+        <div class="booklet">
+
+          <article class="bk-page bk-cover">
+            <div class="bk-cover-crest"><img src="img/sposa_logo.png" alt="SPOSA crest"></div>
+            <div class="bk-cover-eyebrow">SPOSA Commemorative Project</div>
+            <h1 class="bk-cover-title">The <em>Heritage</em> Trail</h1>
+            <div class="bk-cover-sub">St Peters Lutheran College · Indooroopilly</div>
+            <div class="bk-cover-image">
+              <img src="img/ross-roy-1922.jpg" alt="Ross Roy from the gravel driveway, 1922">
+              <div class="bk-cover-cap"><em>Ross Roy from the gravel driveway, 1922</em> · State Library of Queensland</div>
+            </div>
+            <div class="bk-cover-foot">A self-guided walking tour of ${TRAIL.stops.length} stops</div>
+          </article>
+
+          <article class="bk-page bk-intro">
+            <h2 class="bk-section-title">About this Trail</h2>
+            <p class="bk-lead">${esc(TRAIL.intro)}</p>
+            <p>This booklet is a printable companion to the Heritage Trail, the SPOSA-led project to preserve and share the stories of the people, buildings and moments that have shaped St Peters Lutheran College Indooroopilly.</p>
+            <p>Each stop on the trail corresponds to a physical plaque on campus. The plaques carry a QR code that opens the same story online, where visitors can browse photographs and contribute their own memories.</p>
+            <p>The Heritage Trail is an ongoing project. Old Scholars, families, staff and friends of the College are warmly invited to contribute additional stories, corrections and photographs.</p>
+          </article>
+
+          <article class="bk-page bk-toc">
+            <h2 class="bk-section-title">Stations on the Trail</h2>
+            <ol class="bk-toc-list">${tocHtml}</ol>
+          </article>
+
+          ${stopPages}
+
+          <article class="bk-page bk-credits">
+            <h2 class="bk-section-title">Credits &amp; Acknowledgements</h2>
+            <p>The Heritage Trail is a project of the St Peters Old Scholars' Association (SPOSA), undertaken with the cooperation of St Peters Lutheran College Indooroopilly.</p>
+            <p>Photographs and archival materials are reproduced with thanks to the SPOSA archive, the State Library of Queensland, the National Library of Australia (Trove), and the many Old Scholars and families who have contributed images from their personal collections.</p>
+            <p>Every effort has been made to credit sources accurately. If you spot an error or omission, please contact the Heritage Trail Committee via SPOSA.</p>
+            <div class="bk-credits-foot">
+              © St Peters Lutheran College Indooroopilly · <em>Saints for Life</em>
+            </div>
+          </article>
+
+        </div>
+      `;
     }
 
     function initSubmitForm() {

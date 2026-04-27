@@ -1,0 +1,12 @@
+{
+  "name": "heritage-trail",
+  "version": "1.0.0",
+  "private": true,
+  "description": "St Peters Heritage Trail — static SPA with PDF booklet generator",
+  "scripts": {
+    "build:booklet": "node scripts/generate-booklet.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0"
+  }
+}
